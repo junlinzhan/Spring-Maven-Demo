@@ -2,13 +2,10 @@ package com.app.mvc.util;
 
 import com.app.mvc.beans.Mail;
 import com.app.mvc.configuration.DatabaseConfig;
-import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
-
-import java.util.Set;
 
 /**
  * Created by jimin on 15/11/21.
@@ -51,16 +48,6 @@ public class MailUtil {
             log.info("{} 发送邮件到 {} 失败", from, StringUtils.join(mail.getReceivers(), ","));
             return false;
         }
-    }
-
-    public static void main(String[] args) {
-        Mail mail = new Mail();
-        Set<String> toSet = Sets.newHashSet("kanwangzjm@163.com", "466420182@qq.com", "kanwangzjm@126.com");
-        mail.setReceivers(toSet);
-        mail.setSubject("spring exception");
-        mail.setMessage(
-                "Caused by: org.springframework.beans.factory.parsing.BeanDefinitionParsingException: Configuration problem: Only one AsyncAnnotationBeanPostProcessor may exist within the context.");
-        send(mail);
     }
 
 }

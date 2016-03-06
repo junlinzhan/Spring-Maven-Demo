@@ -3,7 +3,7 @@ package com.app.mvc.configuration.service;
 import com.app.mvc.beans.PageQuery;
 import com.app.mvc.dao.ConfigurationDao;
 import com.app.mvc.domain.Configuration;
-import com.app.mvc.vo.ConfigurationParam;
+import com.app.mvc.configuration.vo.ConfigurationParam;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

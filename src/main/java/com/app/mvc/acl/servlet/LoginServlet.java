@@ -2,9 +2,9 @@ package com.app.mvc.acl.servlet;
 
 import com.app.mvc.acl.domain.SysUser;
 import com.app.mvc.acl.service.SysUserService;
+import com.app.mvc.acl.util.LoginUtil;
 import com.app.mvc.common.SpringHelper;
 import com.app.mvc.util.IpUtil;
-import com.app.mvc.acl.util.LoginUtil;
 import com.app.mvc.util.MD5Util;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

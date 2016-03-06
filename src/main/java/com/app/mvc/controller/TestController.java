@@ -14,7 +14,6 @@ import redis.clients.jedis.ShardedJedisPool;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @Controller
@@ -53,7 +52,7 @@ public class TestController {
 
     @ResponseBody
     @RequestMapping(value = "setRedis.do", method = RequestMethod.GET)
-    public JsonData saveRedis(@RequestParam("k") String k, @RequestParam("v") String v, @RequestParam("timeout")int timeout) {
+    public JsonData saveRedis(@RequestParam("k") String k, @RequestParam("v") String v, @RequestParam("timeout") int timeout) {
         redisPool.getResource().setex(k, timeout, v);
         return JsonData.success();
     }
@@ -63,6 +62,5 @@ public class TestController {
     public JsonData getRedis(@RequestParam("k") String k) {
         return JsonData.success(redisPool.getResource().get(k));
     }
-
 
 }
