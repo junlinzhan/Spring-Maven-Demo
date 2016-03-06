@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.mvc.acl.dao.SysUserDao">
+
+    <sql id="sysUserColumns">
+        id,
+        username,
+        password,
+        telephone,
+        mail,
+        remark,
+        dept_id as deptId,
+        status,
+        supplier_id as supplierId,
+        managed_supplier_ids as managedSupplierIds,
+        operator,
+        operate_time as operateTime,
+        operate_ip as operateIp
+    </sql>
+
+    <insert id="save" parameterType="SysUser" useGeneratedKeys="true" keyColumn="id">
+        INSERT INTO sys_user (username, password, telephone, mail, desc, dept_id, status, supplier_id,
+        managed_supplier_ids, operator, operate_ip)
+        VALUES (#{username}, #{password}, #{telephone}, #{mail}, #{desc}, #{deptId}, #{status}, #{supplierId},
+        #{managedSupplierIds}, #{operator}, #{operatorIp})
+
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+
+    <update id="update" parameterType="SysUser">
+        UPDATE sys_user
+        SET username = #{username},
+        telephone = #{telephone},
+        mail = #{mail},
+        remark = #{remark},
+        dept_id = #{deptId},
+        status = #{status},
+        supplier_id = #{supplierId},
+        managed_supplier_ids = #{managedSupplierIds},
+        operator = #{operator},
+        operate_time = now(),
+        operate_ip = #{operateIp}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updatePassword" parameterType="map">
+        UPDATE password = #{password}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findById" resultType="SysUser" parameterType="int">
+        SELECT
+        <include refid="sysUserColumns"/>
+        FROM sys_user
+        WHERE id = #{id}
+    </select>
+
+    <select id="getByIdList" resultType="SysUser" parameterType="list">
+        SELECT
+        <include refid="sysUserColumns"/>
+        FROM sys_user
+        WHERE id IN
+        <foreach collection="idList" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="findByUsername" resultType="SysUser" parameterType="string">
+        SELECT
+        <include refid="sysUserColumns"/>
+        FROM sys_user
+        WHERE username = #{username}
+        limit 1
+    </select>
+
+    <select id="getBySupplierId" parameterType="int" resultType="SysUser">
+        SELECT
+        <include refid="sysUserColumns"/>
+        FROM sys_user
+        WHERE supplier_id = #{supplierId}
+    </select>
+
+    <select id="getByDeptId" parameterType="map" resultType="SysUser">
+        SELECT
+        <include refid="sysUserColumns"/>
+        FROM sys_user
+        WHERE dept_id = #{deptId}
+        ORDER BY username ASC
+        limit #{page.offset}, #{page.pageSize}
+    </select>
+
+    <select id="countByDeptId" parameterType="int" resultType="int">
+        SELECT COUNT(1)
+        FROM sys_user
+        WHERE dept_id = #{deptId}
+    </select>
+</mapper>

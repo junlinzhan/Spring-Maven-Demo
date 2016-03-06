@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.mvc.acl.dao.SysDeptDao">
+
+    <sql id="sysDeptColumns">
+        id,
+        name,
+        supplier_id as supplierId,
+        level,
+        seq,
+        parent_id as parentId,
+        remark,
+        operator,
+        operate_time as operateTime,
+        operate_ip as operateIp
+    </sql>
+
+    <insert id="save" parameterType="SysDept" useGeneratedKeys="true" keyColumn="id">
+        INSERT INTO sys_dept (name, supplier_id, level, seq, parent_id, remark, operator, operate_ip)
+        VALUES (#{name}, #{supplierId}, #{level}, #{seq}, #{parentId}, #{remark}, #{operator}, #{operateIp})
+
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+
+    <update id="update" parameterType="SysDept">
+        UPDATE sys_dept
+        WHERE name = #{name},
+        level = #{level},
+        seq = #{seq},
+        parent_id = #{parentId},
+        remark = #{remark},
+        operator = #{operator},
+        operate_time = now(),
+        operate_ip = #{operateIp}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findById" resultType="SysDept" parameterType="int">
+        SELECT
+        <include refid="sysDeptColumns"/>
+        FROM sys_dept
+        WHERE id = #{id}
+    </select>
+
+    <select id="getBySupplierId" resultType="SysDept" parameterType="int">
+        SELECT
+        <include refid="sysDeptColumns"/>
+        FROM sys_dept
+        WHERE supplier_id = #{supplierId}
+    </select>
+
+    <select id="getChildDeptListByLevel" parameterType="string" resultType="SysDept">
+        SELECT
+        <include refid="sysDeptColumns"/>
+        FROM sys_dept
+        WHERE level = #{level}
+    </select>
+
+    <update id="batchUpdateLevel" parameterType="list">
+        <foreach collection="deptList" separator=";" item="dept">
+            UPDATE sys_dept
+            SET level = #{dept.level}::ltree
+            WHERE id = #{dept.id}
+        </foreach>
+    </update>
+</mapper>

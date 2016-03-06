@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.mvc.dao.FileInfoDao">
+
+    <sql id="fileInfoColumns">
+        id,
+        origin_name as originName,
+        name,
+        operator,
+        operate_time as operateTime,
+        md5,
+        size
+    </sql>
+
+    <select id="findByMD5" resultType="com.app.mvc.domain.FileInfo" parameterType="java.lang.String" >
+        SELECT <include refid="fileInfoColumns" />
+        FROM file_info
+        WHERE md5 = #{md5}
+        limit 1
+    </select>
+
+    <select id="findById" resultType="com.app.mvc.domain.FileInfo" parameterType="java.lang.Integer" >
+        SELECT <include refid="fileInfoColumns" />
+        FROM file_info
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.app.mvc.domain.FileInfo">
+        INSERT INTO file_info
+        (origin_name, name, operator, operate_time, md5, size)
+        VALUES (#{originName}, #{name}, #{operator}, now(), #{md5}, #{size})
+    </insert>
+
+</mapper>

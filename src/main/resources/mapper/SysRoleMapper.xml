@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.mvc.acl.dao.SysRoleDao">
+
+    <sql id="sysRoleColumns">
+        id,
+        name,
+        type,
+        status,
+        supplier_id as supplierId,
+        remark,
+        operator,
+        operate_time as operateTime,
+        operate_ip as operateIp
+    </sql>
+
+    <insert id="save" parameterType="SysRole" useGeneratedKeys="true" keyColumn="id">
+        INSERT INTO sys_role (name, type, status, supplier_id, remark, operator, operate_ip)
+        VALUES (#{name}, #{type}, #{status}, #{supplierId}, #{remark}, #{operator}, #{operateIp})
+
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+
+    <update id="update" parameterType="SysRole">
+        UPDATE sys_role
+        WHERE name = #{name},
+        type = #{type},
+        status = #{status},
+        supplier_id = #{supplierId},
+        remark = #{remark},
+        operator = #{operator},
+        operate_time = now(),
+        operate_ip = #{operateIp}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findById" resultType="SysRole" parameterType="int">
+        SELECT
+        <include refid="sysRoleColumns"/>
+        FROM sys_role
+        WHERE id = #{id}
+    </select>
+
+    <select id="getBySupplierId" resultType="SysRole" parameterType="int">
+        SELECT
+        <include refid="sysRoleColumns"/>
+        FROM sys_role
+        WHERE supplier_id = #{supplierId}
+    </select>
+</mapper>

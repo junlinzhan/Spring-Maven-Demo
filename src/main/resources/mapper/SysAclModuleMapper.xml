@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.mvc.acl.dao.SysAclModuleDao">
+
+    <sql id="sysAclModuleColumns">
+        id,
+        name,
+        parent_id as parentId,
+        level,
+        status,
+        seq,
+        remark,
+        operator,
+        operate_time as operateTime,
+        operate_ip as operateIp
+    </sql>
+
+    <insert id="save" parameterType="SysAclModule" useGeneratedKeys="true" keyColumn="id">
+        INSERT INTO sys_acl_module (name, parent_id, level, status, seq, remark, operator, operate_ip)
+        VALUES (#{name}, #{parentId}, #{level}, #{status}, #{seq}, #{remark}, #{operator}, #{operateIp})
+
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+
+    <update id="update" parameterType="SysAclModule">
+        UPDATE sys_acl_module
+        WHERE name = #{name},
+        parent_id = #{parentId},
+        level = #{level},
+        status = #{status},
+        seq = #{seq},
+        remark = #{remark},
+        operator = #{operator},
+        operate_time = now(),
+        operate_ip = #{operateIp}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findById" resultType="SysAclModule" parameterType="int">
+        SELECT
+        <include refid="sysAclModuleColumns"/>
+        FROM sys_acl_module
+        WHERE id = #{id}
+    </select>
+
+    <select id="countByNameAndParentId" parameterType="map" resultType="int">
+        SELECT count(1)
+        FROM sys_acl_module
+        WHERE parent_id = #{parentId}
+        AND name = #{name}
+        <if test="id != null">
+            AND id != #{id}
+        </if>
+    </select>
+
+    <select id="getAll" resultType="SysAclModule">
+        SELECT
+        <include refid="sysAclModuleColumns"/>
+        FROM sys_acl_module
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(1)
+        FROM sys_acl_module
+    </select>
+
+    <select id="getByIdList" parameterType="list" resultType="SysAclModule">
+        SELECT
+        <include refid="sysAclModuleColumns"/>
+        FROM sys_acl_module
+        WHERE id IN
+        <foreach collection="idList" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="getLevelByIdList" parameterType="list" resultType="SysAclModule">
+        SELECT DISTINCT level
+        FROM sys_acl_module
+        WHERE id IN
+        <foreach collection="idList" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="getChildModuleListByLevel" parameterType="string" resultType="SysAclModule">
+        SELECT
+        <include refid="sysAclModuleColumns"/>
+        FROM sys_acl_module
+        WHERE level = #{level}
+    </select>
+
+    <update id="batchUpdateLevel" parameterType="list">
+        <foreach collection="aclModuleList" separator=";" item="aclModule">
+            UPDATE sys_acl_module
+            SET level = #{aclModule.level}::ltree
+            WHERE id = #{aclModule.id}
+        </foreach>
+    </update>
+</mapper>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.mvc.acl.dao.SysAclDao">
+
+    <sql id="sysAclColumns">
+        id,
+        code,
+        name,
+        acl_module_id as aclModuleId,
+        url,
+        type,
+        status,
+        seq,
+        remark,
+        operator,
+        operate_time as operateTime,
+        operate_ip as operateIp
+    </sql>
+
+    <sql id="sysAclWithAclModuleColumns">
+        acl.id as id,
+        acl.code as code,
+        acl.name as name,
+        acl_module_id as aclModuleId,
+        acl.url as url,
+        acl.type as type,
+        acl.status as status,
+        acl.seq as seq,
+        acl.remark as remark,
+        acl.operator as operator,
+        acl.operate_time as operateTime,
+        acl.operate_ip as operateIp,
+        aclModule.name as aclModuleName,
+        aclModule.level as aclModuleLevel
+    </sql>
+
+    <insert id="save" parameterType="SysAcl" useGeneratedKeys="true" keyColumn="id">
+        INSERT INTO sys_acl (code, name, acl_module_id, url, type, status, seq, remark, operator, operate_ip)
+        VALUES (#{code}, #{name}, #{aclModuleId}, #{url}, #{type}, #{status}, #{seq}, #{remark}, #{operator}, #{operateIp})
+
+        <selectKey resultType="int" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+    </insert>
+
+    <update id="update" parameterType="SysAcl">
+        UPDATE sys_acl
+        SET name = #{name},
+        acl_module_id = #{aclModuleId},
+        url = #{url},
+        type = #{type},
+        status = #{status},
+        seq = #{seq},
+        remark = #{remark},
+        operator = #{operator},
+        operate_time = now(),
+        operate_ip = #{operateIp}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findById" resultType="SysAcl" parameterType="int">
+        SELECT
+        <include refid="sysAclColumns"/>
+        FROM sys_acl
+        WHERE id = #{id}
+    </select>
+
+    <select id="findByCode" resultType="SysAcl" parameterType="string">
+        SELECT
+        <include refid="sysAclColumns"/>
+        FROM sys_acl
+        WHERE code = #{code}
+    </select>
+
+    <select id="getByIdList" resultType="SysAcl" parameterType="list">
+        SELECT
+        <include refid="sysAclColumns"/>
+        FROM sys_acl
+        WHERE id IN
+        <foreach collection="idList" open="(" close=")" item="id" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="getByUrlRegexp" parameterType="map" resultType="SysAcl">
+        SELECT
+        <include refid="sysAclColumns"/>
+        FROM sys_acl
+        WHERE url is not null
+        AND #{url} REGEXP url
+    </select>
+
+    <select id="getPageByAclModuleId" parameterType="map" resultType="SysAcl">
+        SELECT
+        <include refid="sysAclColumns"/>
+        FROM sys_acl
+        WHERE acl_module_id = #{aclModuleId}
+        ORDER BY seq ASC
+        limit #{page.offset}, #{page.pageSize}
+    </select>
+
+    <select id="getAll" resultType="SysAcl">
+        SELECT
+        <include refid="sysAclColumns"/>
+        FROM sys_acl
+    </select>
+
+    <select id="countByAclModuleId" parameterType="int" resultType="int">
+        SELECT COUNT(1)
+        FROM sys_acl
+        WHERE acl_module_id = #{aclModuleId}
+    </select>
+
+    <select id="countByNameAndAclModuleId" parameterType="map" resultType="int">
+      SELECT COUNT(1)
+      FROM sys_acl
+      WHERE acl_module_id = #{aclModuleId}
+      AND name = #{name}
+      <if test="id != null" >
+          AND id != #{id}
+      </if>
+    </select>
+</mapper>

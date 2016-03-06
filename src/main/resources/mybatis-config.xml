@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <!-- Globally enables or disables any caches configured in any mapper under this configuration -->
+        <setting name="cacheEnabled" value="true"/>
+        <!-- Sets the number of seconds the driver will wait for a response from the database -->
+        <setting name="defaultStatementTimeout" value="3000"/>
+        <!-- Enables automatic mapping from classic database column names A_COLUMN to camel case classic Java property names aColumn -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- Allows JDBC support for generated keys. A compatible driver is required.
+        This setting forces generated keys to be used if set to true,
+         as some drivers deny compatibility but still work -->
+        <setting name="useGeneratedKeys" value="true"/>
+    </settings>
+
+    <typeAliases>
+        <typeAlias alias="SysLog" type="com.app.mvc.acl.domain.SysLog"></typeAlias>
+        <typeAlias alias="SysAcl" type="com.app.mvc.acl.domain.SysAcl"></typeAlias>
+        <typeAlias alias="SysAclModule" type="com.app.mvc.acl.domain.SysAclModule"></typeAlias>
+        <typeAlias alias="SysDept" type="com.app.mvc.acl.domain.SysDept"></typeAlias>
+        <typeAlias alias="SysRoleAcl" type="com.app.mvc.acl.domain.SysRoleAcl"></typeAlias>
+        <typeAlias alias="SysRoleUser" type="com.app.mvc.acl.domain.SysRoleUser"></typeAlias>
+        <typeAlias alias="SysRole" type="com.app.mvc.acl.domain.SysRole"></typeAlias>
+        <typeAlias alias="SysUser" type="com.app.mvc.acl.domain.SysUser"></typeAlias>
+    </typeAliases>
+
+    <typeHandlers>
+        <typeHandler handler="com.app.mvc.common.JodaDateTimeHandler" javaType="org.joda.time.DateTime" />
+    </typeHandlers>
+
+    <plugins>
+        <plugin interceptor="com.app.mvc.common.SQLMonitorInterceptor"/>
+    </plugins>
+
+</configuration>
