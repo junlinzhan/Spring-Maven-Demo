@@ -1,4 +1,4 @@
-package com.app.mvc.quartz;
+package com.app.mvc.test;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
