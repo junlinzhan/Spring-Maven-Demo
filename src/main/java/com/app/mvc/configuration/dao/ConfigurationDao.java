@@ -1,8 +1,8 @@
-package com.app.mvc.dao;
+package com.app.mvc.configuration.dao;
 
 import com.app.mvc.beans.PageQuery;
 import com.app.mvc.common.DatabaseRepository;
-import com.app.mvc.domain.Configuration;
+import com.app.mvc.configuration.domain.Configuration;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

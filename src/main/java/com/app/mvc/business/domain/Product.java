@@ -1,6 +1,9 @@
-package com.app.mvc.domain;
+package com.app.mvc.business.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -10,9 +13,12 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
 
-    private int id;
+    private Integer id;
 
     private String title;
 

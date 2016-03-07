@@ -1,4 +1,4 @@
-package com.app.mvc.controller;
+package com.app.mvc.business.controller;
 
 import com.app.mvc.beans.JsonData;
 import lombok.extern.slf4j.Slf4j;

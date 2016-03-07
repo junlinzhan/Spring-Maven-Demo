@@ -8,7 +8,7 @@ import com.app.mvc.beans.PageResult;
 import com.app.mvc.configuration.DatabaseConfig;
 import com.app.mvc.configuration.service.ConfigurationService;
 import com.app.mvc.configuration.vo.ConfigurationParam;
-import com.app.mvc.domain.Configuration;
+import com.app.mvc.configuration.domain.Configuration;
 import com.app.mvc.exception.ParaException;
 import com.app.mvc.util.BindingResultUtil;
 import lombok.extern.slf4j.Slf4j;

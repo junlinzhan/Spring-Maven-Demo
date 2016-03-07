@@ -3,7 +3,7 @@ package com.app.mvc.configuration;
 import com.app.mvc.beans.JsonMapper;
 import com.app.mvc.common.SpringHelper;
 import com.app.mvc.configuration.service.ConfigurationService;
-import com.app.mvc.domain.Configuration;
+import com.app.mvc.configuration.domain.Configuration;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

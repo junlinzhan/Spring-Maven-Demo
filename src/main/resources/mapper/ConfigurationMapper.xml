@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.app.mvc.dao.ConfigurationDao">
+<mapper namespace="com.app.mvc.configuration.dao.ConfigurationDao">
 
     <sql id="configurationColumn">
         k,
@@ -12,13 +12,13 @@
         comment
     </sql>
 
-    <select id="findByK" resultType="com.app.mvc.domain.Configuration" parameterType="java.lang.String" >
+    <select id="findByK" resultType="com.app.mvc.configuration.domain.Configuration" parameterType="java.lang.String" >
         SELECT <include refid="configurationColumn" />
         FROM configuration
         WHERE k = #{k}
     </select>
 
-    <insert id="insert" parameterType="com.app.mvc.domain.Configuration">
+    <insert id="insert" parameterType="com.app.mvc.configuration.domain.Configuration">
         INSERT INTO configuration
         (k, v, operator, comment)
         VALUES
@@ -30,18 +30,18 @@
         FROM configuration
     </select>
 
-    <select id="getAll" resultType="com.app.mvc.domain.Configuration">
+    <select id="getAll" resultType="com.app.mvc.configuration.domain.Configuration">
         SELECT <include refid="configurationColumn" />
         FROM configuration
     </select>
 
-    <select id="getByPage" resultType="com.app.mvc.domain.Configuration" parameterType="java.util.Map">
+    <select id="getByPage" resultType="com.app.mvc.configuration.domain.Configuration" parameterType="java.util.Map">
         SELECT <include refid="configurationColumn" />
         FROM configuration
         limit #{offset},#{pageSize}
     </select>
 
-    <update id="updateByK" parameterType="com.app.mvc.domain.Configuration">
+    <update id="updateByK" parameterType="com.app.mvc.configuration.domain.Configuration">
         UPDATE configuration
         SET v = #{v}
         <if test="operator != null and operator != ''">

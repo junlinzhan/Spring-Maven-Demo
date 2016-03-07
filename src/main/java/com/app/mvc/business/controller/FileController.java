@@ -1,12 +1,12 @@
-package com.app.mvc.controller;
+package com.app.mvc.business.controller;
 
 import com.app.mvc.beans.JsonData;
 import com.app.mvc.beans.JsonMapper;
-import com.app.mvc.bo.FileUploadBo;
+import com.app.mvc.business.bo.FileUploadBo;
 import com.app.mvc.configuration.DatabaseConfig;
-import com.app.mvc.domain.FileInfo;
+import com.app.mvc.business.domain.FileInfo;
 import com.app.mvc.exception.NotFoundException;
-import com.app.mvc.service.FileInfoService;
+import com.app.mvc.business.service.FileInfoService;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

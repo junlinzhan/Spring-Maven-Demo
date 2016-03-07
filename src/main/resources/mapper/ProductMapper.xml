@@ -3,9 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.app.mvc.dao.ProductDao">
+<mapper namespace="com.app.mvc.business.dao.ProductDao">
 
-    <select id="getProductList" resultType="com.app.mvc.domain.Product" parameterType="java.util.Map" >
+    <select id="getProductList" resultType="com.app.mvc.business.domain.Product" parameterType="java.util.Map" >
         SELECT *
         FROM product
         limit #{offset},#{pageSize}
@@ -15,4 +15,11 @@
         SELECT COUNT(1)
         FROM product
     </select>
+
+    <insert id="save" parameterType="com.app.mvc.business.domain.Product">
+        INSERT INTO product
+        (title, image)
+        VALUES
+        (#{title}, #{image})
+    </insert>
 </mapper>

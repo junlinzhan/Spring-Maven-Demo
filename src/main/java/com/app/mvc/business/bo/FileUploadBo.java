@@ -1,4 +1,4 @@
-package com.app.mvc.bo;
+package com.app.mvc.business.bo;
 
 import lombok.Getter;
 import lombok.Setter;

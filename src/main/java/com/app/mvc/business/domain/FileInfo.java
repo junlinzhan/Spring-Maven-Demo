@@ -1,4 +1,4 @@
-package com.app.mvc.domain;
+package com.app.mvc.business.domain;
 
 import lombok.Getter;
 import lombok.Setter;

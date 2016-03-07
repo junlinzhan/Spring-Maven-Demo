@@ -1,8 +1,8 @@
-package com.app.mvc.dao;
+package com.app.mvc.business.dao;
 
 import com.app.mvc.beans.PageQuery;
 import com.app.mvc.common.DatabaseRepository;
-import com.app.mvc.domain.Product;
+import com.app.mvc.business.domain.Product;
 
 import java.util.List;
 
@@ -15,4 +15,6 @@ public interface ProductDao {
     List<Product> getProductList(PageQuery pageQuery);
 
     int count();
+
+    void save(Product product);
 }
