@@ -3,6 +3,7 @@ package com.app.mvc.business.dao;
 import com.app.mvc.beans.PageQuery;
 import com.app.mvc.common.DatabaseRepository;
 import com.app.mvc.business.domain.Product;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,9 +13,11 @@ import java.util.List;
 @DatabaseRepository
 public interface ProductDao {
 
-    List<Product> getProductList(PageQuery pageQuery);
+    List<Product> getValidProductList(PageQuery pageQuery);
 
-    int count();
+    int countValid();
 
     void save(Product product);
+
+    void invalid(@Param("id") int id);
 }

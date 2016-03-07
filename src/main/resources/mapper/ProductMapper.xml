@@ -5,21 +5,39 @@
 
 <mapper namespace="com.app.mvc.business.dao.ProductDao">
 
-    <select id="getProductList" resultType="com.app.mvc.business.domain.Product" parameterType="java.util.Map" >
-        SELECT *
+    <sql id="productColumns">
+        id,
+        title,
+        image,
+        status
+    </sql>
+
+    <select id="getValidProductList" resultType="com.app.mvc.business.domain.Product" parameterType="java.util.Map">
+        SELECT
+        <include refid="productColumns"/>
         FROM product
-        limit #{offset},#{pageSize}
+        WHERE status = 1
+        ORDER BY id ASC
+        limit #{offset}, #{pageSize}
     </select>
 
-    <select id="count" resultType="java.lang.Integer">
+    <select id="countValid" resultType="int">
         SELECT COUNT(1)
         FROM product
+        WHERE status = 1
     </select>
 
     <insert id="save" parameterType="com.app.mvc.business.domain.Product">
         INSERT INTO product
-        (title, image)
+        (title, image, status, create_time, update_time)
         VALUES
-        (#{title}, #{image})
+        (#{title}, #{image}, 1, now(), now())
     </insert>
+
+    <update id="invalid" parameterType="int">
+        UPDATE product
+        SET status = 0,
+            update_time = now()
+        WHERE id = #{id}
+    </update>
 </mapper>

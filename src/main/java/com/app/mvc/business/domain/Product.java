@@ -23,4 +23,6 @@ public class Product {
     private String title;
 
     private String image;
+
+    private int status;
 }

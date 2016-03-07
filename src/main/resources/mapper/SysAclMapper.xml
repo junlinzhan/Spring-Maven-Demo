@@ -115,12 +115,12 @@
     </select>
 
     <select id="countByNameAndAclModuleId" parameterType="map" resultType="int">
-      SELECT COUNT(1)
-      FROM sys_acl
-      WHERE acl_module_id = #{aclModuleId}
-      AND name = #{name}
-      <if test="id != null" >
-          AND id != #{id}
-      </if>
+        SELECT COUNT(1)
+        FROM sys_acl
+        WHERE acl_module_id = #{aclModuleId}
+        AND name = #{name}
+        <if test="id != null">
+            AND id != #{id}
+        </if>
     </select>
 </mapper>

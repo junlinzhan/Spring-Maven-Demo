@@ -15,15 +15,17 @@
         size
     </sql>
 
-    <select id="findByMD5" resultType="com.app.mvc.business.domain.FileInfo" parameterType="java.lang.String" >
-        SELECT <include refid="fileInfoColumns" />
+    <select id="findByMD5" resultType="com.app.mvc.business.domain.FileInfo" parameterType="java.lang.String">
+        SELECT
+        <include refid="fileInfoColumns"/>
         FROM file_info
         WHERE md5 = #{md5}
         limit 1
     </select>
 
-    <select id="findById" resultType="com.app.mvc.business.domain.FileInfo" parameterType="java.lang.Integer" >
-        SELECT <include refid="fileInfoColumns" />
+    <select id="findById" resultType="com.app.mvc.business.domain.FileInfo" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="fileInfoColumns"/>
         FROM file_info
         WHERE id = #{id}
     </select>

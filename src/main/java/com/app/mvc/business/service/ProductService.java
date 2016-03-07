@@ -21,9 +21,9 @@ public class ProductService {
     private ProductDao productDao;
 
     public PageResult<Product> getPage(PageQuery pageQuery) {
-        int count = productDao.count();
+        int count = productDao.countValid();
         if (count > 0) {
-            List<Product> list = productDao.getProductList(pageQuery);
+            List<Product> list = productDao.getValidProductList(pageQuery);
             return PageResult.<Product>builder().data(list).total(count).build();
         } else {
             return PageResult.<Product>builder().total(0).build();
@@ -34,5 +34,9 @@ public class ProductService {
         BaseConvert.checkPara(para);
         Product product = Product.builder().id(para.getId()).title(para.getTitle()).image(para.getImage()).build();
         productDao.save(product);
+    }
+
+    public void delete(int id) {
+        productDao.invalid(id);
     }
 }

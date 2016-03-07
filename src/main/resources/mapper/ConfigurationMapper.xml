@@ -12,8 +12,9 @@
         comment
     </sql>
 
-    <select id="findByK" resultType="com.app.mvc.configuration.domain.Configuration" parameterType="java.lang.String" >
-        SELECT <include refid="configurationColumn" />
+    <select id="findByK" resultType="com.app.mvc.configuration.domain.Configuration" parameterType="java.lang.String">
+        SELECT
+        <include refid="configurationColumn"/>
         FROM configuration
         WHERE k = #{k}
     </select>
@@ -31,12 +32,14 @@
     </select>
 
     <select id="getAll" resultType="com.app.mvc.configuration.domain.Configuration">
-        SELECT <include refid="configurationColumn" />
+        SELECT
+        <include refid="configurationColumn"/>
         FROM configuration
     </select>
 
     <select id="getByPage" resultType="com.app.mvc.configuration.domain.Configuration" parameterType="java.util.Map">
-        SELECT <include refid="configurationColumn" />
+        SELECT
+        <include refid="configurationColumn"/>
         FROM configuration
         limit #{offset},#{pageSize}
     </select>

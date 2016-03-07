@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.mvc.business.dao.AttractInvestmentDao">
+
+    <sql id="attractInvestmentColumns">
+        id,
+        username,
+        mobile,
+        telephone,
+        fax,
+        area,
+        sex,
+        mail,
+        qq,
+        business_brand as businessBrand,
+        business_model as businessModel,
+        venue_name as venueName,
+        business_size as businessSize,
+        contract_time as contractTime,
+        investment_amount as investmentAmount
+        comment,
+        create_time as createTime,
+        create_ip as createIp
+    </sql>
+
+</mapper>
