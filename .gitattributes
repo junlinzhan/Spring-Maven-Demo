@@ -1,1 +1,1 @@
-*.js linguist-language=Java*.css linguist-language=Java*.html linguist-language=Java*.html linguist-vendored=false
+*.js linguist-language=Java *.css linguist-language=Java *.html linguist-language=Java
