@@ -1,5 +1,6 @@
 package com.app.mvc.beans;
 
+import com.google.common.collect.Lists;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +17,7 @@ import java.util.List;
 @Builder
 public class PageResult<T> {
 
-    private List<T> data;
+    private List<T> data = Lists.newArrayList();
 
     private int total;
 }

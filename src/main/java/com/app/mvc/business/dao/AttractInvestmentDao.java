@@ -1,1 +1,0 @@
-package com.app.mvc.business.dao;import com.app.mvc.common.DatabaseRepository;/** * Created by jimin on 16/3/8. */@DatabaseRepositorypublic interface AttractInvestmentDao {}

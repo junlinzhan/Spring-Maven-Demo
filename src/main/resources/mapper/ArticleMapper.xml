@@ -16,4 +16,44 @@
         operate_time as operateTime
     </sql>
 
+    <insert id="save" parameterType="com.app.mvc.business.domain.Article">
+        INSERT INTO article
+        (content, title, read_times, publish_time, operator, operate_ip, operate_time)
+        VALUES
+        (#{content}, #{title}, 0, now(), #{operator}, #{operateIp}, now())
+    </insert>
+
+    <update id="update" parameterType="com.app.mvc.business.domain.Article">
+        UPDATE article
+        SET content = #{content},
+            title = #{title},
+            operator = #{operator},
+            operate_ip = #{operateIp},
+            operate_time = now()
+        WHERE id = #{id}
+    </update>
+
+    <select id="findById" parameterType="int" resultType="com.app.mvc.business.domain.Article">
+        SELECT <include refid="articleColumns"/>
+        FROM article
+        WHERE id = #{id}
+    </select>
+
+    <select id="getPage" parameterType="com.app.mvc.beans.PageQuery" resultType="com.app.mvc.business.domain.Article">
+        SELECT <include refid="articleColumns"/>
+        FROM article
+        ORDER BY id DESC
+        limit #{pageSize} offset #{offset}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT count(1)
+        FROM article
+    </select>
+
+    <update id="incrReadTime" parameterType="int">
+        UPDATE article
+        SET read_times = read_times + 1
+        WHERE id = #{id}
+    </update>
 </mapper>
