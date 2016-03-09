@@ -1,13 +1,13 @@
 package com.app.mvc.business.dao;
 
-import com.app.mvc.common.DatabaseRepository;
+import com.app.mvc.common.DBRepository;
 import com.app.mvc.business.domain.FileInfo;
 import org.apache.ibatis.annotations.Param;
 
 /**
  * Created by jimin on 15/11/29.
  */
-@DatabaseRepository
+@DBRepository
 public interface FileInfoDao {
 
     FileInfo findByMD5(@Param("md5") String md5);

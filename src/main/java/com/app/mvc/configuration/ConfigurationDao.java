@@ -1,7 +1,7 @@
 package com.app.mvc.configuration;
 
 import com.app.mvc.beans.PageQuery;
-import com.app.mvc.common.DatabaseRepository;
+import com.app.mvc.common.DBRepository;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by jimin on 15/11/7.
  */
-@DatabaseRepository
+@DBRepository
 public interface ConfigurationDao {
 
     Configuration findByK(@Param("k") String k);

@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
-public @interface DatabaseRepository {
+public @interface DBRepository {
 
     String value() default "";
 }
