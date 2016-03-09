@@ -2,24 +2,17 @@ package com.app.mvc.configuration.controller;
 
 import com.app.mvc.acl.util.RequestHolder;
 import com.app.mvc.beans.JsonData;
-import com.app.mvc.beans.JsonMapper;
 import com.app.mvc.beans.PageQuery;
-import com.app.mvc.beans.PageResult;
 import com.app.mvc.configuration.DatabaseConfig;
+import com.app.mvc.configuration.domain.Configuration;
 import com.app.mvc.configuration.service.ConfigurationService;
 import com.app.mvc.configuration.vo.ConfigurationParam;
-import com.app.mvc.configuration.domain.Configuration;
-import com.app.mvc.exception.ParaException;
-import com.app.mvc.util.BindingResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Created by jimin on 15/11/7.
