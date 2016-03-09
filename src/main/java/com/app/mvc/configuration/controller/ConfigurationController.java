@@ -42,25 +42,14 @@ public class ConfigurationController {
 
     @ResponseBody
     @RequestMapping("/save.json")
-    public JsonData save(@Valid ConfigurationParam param, BindingResult bindingResult) {
-
-        if (bindingResult != null && bindingResult.hasErrors()) {
-            log.error("参数错误, 错误信息:{}，参数:{}", JsonMapper.obj2String(BindingResultUtil.getErrors(bindingResult)), JsonMapper.obj2String(param));
-            throw new ParaException(JsonMapper.obj2String(BindingResultUtil.getErrors(bindingResult)));
-        }
+    public JsonData save(ConfigurationParam param) {
         Configuration configuration = configurationService.saveOrUpdate(param);
         return JsonData.success(configuration);
     }
 
     @ResponseBody
     @RequestMapping("/page.json")
-    public JsonData page(@Valid PageQuery page, BindingResult bindingResult) {
-        if (bindingResult != null && bindingResult.hasErrors()) {
-            log.error("参数错误, 错误信息:{}，参数:{}", JsonMapper.obj2String(BindingResultUtil.getErrors(bindingResult)), JsonMapper.obj2String(page));
-            throw new ParaException(JsonMapper.obj2String(BindingResultUtil.getErrors(bindingResult)));
-        }
-        List<Configuration> configurationList = configurationService.getByPage(page);
-        int count = configurationService.count();
-        return JsonData.success(PageResult.<Configuration>builder().total(count).data(configurationList).build());
+    public JsonData page(PageQuery page) {
+        return JsonData.success(configurationService.getByPage(page));
     }
 }

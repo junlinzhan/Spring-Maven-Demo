@@ -1,6 +1,7 @@
 package com.app.mvc.configuration.service;
 
 import com.app.mvc.beans.PageQuery;
+import com.app.mvc.beans.PageResult;
 import com.app.mvc.configuration.dao.ConfigurationDao;
 import com.app.mvc.configuration.domain.Configuration;
 import com.app.mvc.configuration.vo.ConfigurationParam;
@@ -22,12 +23,13 @@ public class ConfigurationService {
         return configurationDao.getAll();
     }
 
-    public List<Configuration> getByPage(PageQuery page) {
-        return configurationDao.getByPage(page);
-    }
-
-    public int count() {
-        return configurationDao.count();
+    public PageResult<Configuration> getByPage(PageQuery page) {
+        int count = configurationDao.count();
+        if(count > 0) {
+            List<Configuration> list = configurationDao.getByPage(page);
+            return PageResult.<Configuration>builder().total(count).data(list).build();
+        }
+        return PageResult.<Configuration>builder().total(0).build();
     }
 
     public Configuration saveOrUpdate(ConfigurationParam param) {
