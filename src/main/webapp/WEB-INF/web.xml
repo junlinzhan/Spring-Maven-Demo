@@ -47,6 +47,19 @@
         <url-pattern>/config/*</url-pattern>
     </filter-mapping>
 
+    <filter>
+        <filter-name>CaptchaFilter</filter-name>
+        <filter-class>com.app.mvc.captcha.CaptchaFilter</filter-class>
+        <init-param>
+            <param-name>targetFilterLifecycle</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>CaptchaFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <!-- Encoding -->
     <filter>
         <filter-name>encodingFilter</filter-name>
@@ -99,16 +112,6 @@
     <servlet-mapping>
         <servlet-name>logoutServlet</servlet-name>
         <url-pattern>/logout.do</url-pattern>
-    </servlet-mapping>
-
-    <!-- 验证码 -->
-    <servlet>
-        <servlet-name>captchaCodeServlet</servlet-name>
-        <servlet-class>com.app.mvc.captcha.CaptchaCodeServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>captchaCodeServlet</servlet-name>
-        <url-pattern>*.images</url-pattern>
     </servlet-mapping>
 
     <error-page>

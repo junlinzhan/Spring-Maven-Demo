@@ -1,11 +1,8 @@
-package com.app.mvc.configuration.service;
+package com.app.mvc.configuration;
 
 import com.app.mvc.acl.convert.BaseConvert;
 import com.app.mvc.beans.PageQuery;
 import com.app.mvc.beans.PageResult;
-import com.app.mvc.configuration.dao.ConfigurationDao;
-import com.app.mvc.configuration.domain.Configuration;
-import com.app.mvc.configuration.vo.ConfigurationParam;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,7 +24,7 @@ public class ConfigurationService {
     public PageResult<Configuration> getByPage(PageQuery page) {
         BaseConvert.checkPara(page);
         int count = configurationDao.count();
-        if(count > 0) {
+        if (count > 0) {
             List<Configuration> list = configurationDao.getByPage(page);
             return PageResult.<Configuration>builder().total(count).data(list).build();
         }

@@ -1,12 +1,8 @@
-package com.app.mvc.configuration.controller;
+package com.app.mvc.configuration;
 
 import com.app.mvc.acl.util.RequestHolder;
 import com.app.mvc.beans.JsonData;
 import com.app.mvc.beans.PageQuery;
-import com.app.mvc.configuration.DatabaseConfig;
-import com.app.mvc.configuration.domain.Configuration;
-import com.app.mvc.configuration.service.ConfigurationService;
-import com.app.mvc.configuration.vo.ConfigurationParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

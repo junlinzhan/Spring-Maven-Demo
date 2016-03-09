@@ -2,8 +2,6 @@ package com.app.mvc.configuration;
 
 import com.app.mvc.beans.JsonMapper;
 import com.app.mvc.common.SpringHelper;
-import com.app.mvc.configuration.service.ConfigurationService;
-import com.app.mvc.configuration.domain.Configuration;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -23,6 +21,12 @@ import java.util.Set;
 public class DatabaseConfig {
 
     private static Map<String, String> configMap = Maps.newConcurrentMap();
+
+    private static Map<String, List<String>> configListStringMap = Maps.newConcurrentMap();
+
+    private static Map<String, List<Integer>> configListIntMap = Maps.newConcurrentMap();
+
+    private static Map<String, Set<String>> configSetStringMap = Maps.newConcurrentMap();
 
     public synchronized static void loadAllConfig() {
         log.info("load all config");
@@ -93,6 +97,9 @@ public class DatabaseConfig {
         if (!configMap.containsKey(k)) {
             return result;
         }
+        if (configSetStringMap.containsKey(k)) {
+            return configSetStringMap.get(k);
+        }
         String v = configMap.get(k);
         if (StringUtils.isBlank(v)) {
             return result;
@@ -101,6 +108,7 @@ public class DatabaseConfig {
         for (String str : res) {
             result.add(str);
         }
+        configSetStringMap.put(k, result);
         return result;
     }
 
@@ -113,6 +121,9 @@ public class DatabaseConfig {
         if (!configMap.containsKey(k)) {
             return result;
         }
+        if (configListStringMap.containsKey(k)) {
+            return configListStringMap.get(k);
+        }
         String v = configMap.get(k);
         if (StringUtils.isBlank(v)) {
             return result;
@@ -121,6 +132,7 @@ public class DatabaseConfig {
         for (String str : res) {
             result.add(str);
         }
+        configListStringMap.put(k, result);
         return result;
     }
 
@@ -132,6 +144,9 @@ public class DatabaseConfig {
         List<Integer> result = Lists.newArrayList();
         if (!configMap.containsKey(k)) {
             return result;
+        }
+        if (configListIntMap.containsKey(k)) {
+            return configListIntMap.get(k);
         }
         String v = configMap.get(k);
         if (StringUtils.isBlank(v)) {
@@ -146,6 +161,7 @@ public class DatabaseConfig {
             log.error("integer list parse error, k:{}", k, e);
             return Lists.newArrayList();
         }
+        configListIntMap.put(k, result);
         return result;
     }
 }

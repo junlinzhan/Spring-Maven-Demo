@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.mvc.captcha.CaptchaCodeDao">
+
+    <sql id="captchaCodeColumns">
+        id,
+        code,
+        session_id as sessionId,
+        try_times as tryTimes,
+        expire_time as expireTime,
+        create_time as createTime,
+        status
+    </sql>
+
+    <insert id="save" parameterType="com.app.mvc.captcha.Captcha">
+        INSERT INTO captcha_code
+        (code, session_id, try_times, expire_time, create_time,status)
+        VALUES
+        (#{code},#{sessionId},0,#{expireTime},now(),1)
+    </insert>
+
+    <select id="findById" parameterType="int" resultType="com.app.mvc.captcha.CaptchaCode">
+        SELECT
+        <include refid="captchaCodeColumns"/>
+        FROM captcha_code
+        WHERE id = #{id}
+    </select>
+
+    <update id="incrTryTimes" parameterType="int">
+        UPDATE captcha_code
+        SET try_times = try_times + 1
+        WHERE id = #{id}
+        AND status = 1
+    </update>
+
+    <select id="findLastBySessionId" parameterType="string" resultType="com.app.mvc.captcha.CaptchaCode">
+        SELECT
+        <include refid="captchaCodeColumns"/>
+        FROM captcha_code
+        WHERE session_id = #{sessionId}
+        AND status = 1
+        ORDER BY create_time DESC
+        limit 1
+    </select>
+
+    <select id="countBySessionIdAndCreateTime" parameterType="map" resultType="int">
+        SELECT count(1)
+        FROM captcha_code
+        WHERE session_id = #{sessionId}
+        AND create_time >= #{targetTime}
+        AND status = 1
+    </select>
+
+    <update id="invalidCaptchaCode" parameterType="map">
+        UPDATE captcha_code
+        set status = 0
+        WHERE session_id = #{sessionId}
+        AND code = #{code}
+    </update>
+
+</mapper>
