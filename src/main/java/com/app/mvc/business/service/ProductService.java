@@ -20,10 +20,11 @@ public class ProductService {
     @Resource
     private ProductDao productDao;
 
-    public PageResult<Product> getPage(PageQuery pageQuery) {
+    public PageResult<Product> getPage(PageQuery page) {
+        BaseConvert.checkPara(page);
         int count = productDao.countValid();
         if (count > 0) {
-            List<Product> list = productDao.getValidProductList(pageQuery);
+            List<Product> list = productDao.getValidProductList(page);
             return PageResult.<Product>builder().data(list).total(count).build();
         }
         return PageResult.<Product>builder().total(0).build();

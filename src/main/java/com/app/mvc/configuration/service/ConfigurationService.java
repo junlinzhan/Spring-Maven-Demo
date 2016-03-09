@@ -1,5 +1,6 @@
 package com.app.mvc.configuration.service;
 
+import com.app.mvc.acl.convert.BaseConvert;
 import com.app.mvc.beans.PageQuery;
 import com.app.mvc.beans.PageResult;
 import com.app.mvc.configuration.dao.ConfigurationDao;
@@ -24,6 +25,7 @@ public class ConfigurationService {
     }
 
     public PageResult<Configuration> getByPage(PageQuery page) {
+        BaseConvert.checkPara(page);
         int count = configurationDao.count();
         if(count > 0) {
             List<Configuration> list = configurationDao.getByPage(page);
