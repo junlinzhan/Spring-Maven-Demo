@@ -1,11 +1,5 @@
 package com.app.mvc.beans;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Maps;
-
-import java.util.Collection;
-import java.util.Map;
-
 public class JsonData {
 
     private final boolean ret;
@@ -35,33 +29,6 @@ public class JsonData {
 
     public static JsonData success() {
         return success(null, null);
-    }
-
-    public static <T> JsonData list(Collection<T> content, Integer totalRows, String msg) {
-        Preconditions.checkNotNull(content);  // fast fail
-        JsonData result = new JsonData(true);
-        Map<String, Object> map = Maps.newHashMap();
-        map.put("content", content);
-        if (totalRows == null) {
-            map.put("totalRows", content.size());
-        } else {
-            map.put("totalRows", totalRows);
-        }
-        result.msg = msg;
-        result.data = map;
-        return result;
-    }
-
-    public static <T> JsonData list(Collection<T> content, String msg) {
-        return list(content, null, msg);
-    }
-
-    public static <T> JsonData list(Collection<T> content) {
-        return list(content, null, null);
-    }
-
-    public static <T> JsonData list(Collection<T> content, Integer totalRows) {
-        return list(content, totalRows, null);
     }
 
     public boolean getRet() {
