@@ -8,6 +8,7 @@ import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.util.concurrent.ListenableFuture;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
@@ -21,8 +22,6 @@ import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.apache.commons.httpclient.protocol.Protocol;
 import org.apache.commons.httpclient.protocol.ProtocolSocketFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.concurrent.NotThreadSafe;
 import java.io.UnsupportedEncodingException;
@@ -41,10 +40,9 @@ import static com.google.common.base.Strings.isNullOrEmpty;
  * 封装了apache的HttpClient，简化同步，异步，https，代理设置，get/post请求
  * Created by jimin on 16/03/10.
  */
+@Slf4j
 @NotThreadSafe
 public abstract class AbstractHttpClient {
-
-    private final static Logger logger = LoggerFactory.getLogger(AbstractHttpClient.class);
 
     static class DefaultConfig {
         final static String DEFAULT_USER_AGENT = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; InfoPath.2)";
@@ -405,7 +403,7 @@ public abstract class AbstractHttpClient {
 
             return true;
         }
-        logger.info("未设定trust store和keystroe，将按照默认证书校验处理");
+        log.info("未设定trust store和keystroe，将按照默认证书校验处理");
         return false;
     }
 
