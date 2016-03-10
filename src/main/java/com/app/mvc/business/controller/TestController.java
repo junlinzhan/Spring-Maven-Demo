@@ -1,6 +1,7 @@
 package com.app.mvc.business.controller;
 
 import com.app.mvc.beans.JsonData;
+import com.app.mvc.http.HttpClients;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,15 +22,11 @@ public class TestController {
     private ShardedJedisPool redisPool;
 
     @ResponseBody
-    @RequestMapping(value = "hello2.json", method = RequestMethod.GET)
-    public JsonData hello2() {
-        return JsonData.success("xxx");
-    }
-
     @RequestMapping(value = "test.do", method = RequestMethod.GET)
-    public ModelAndView test() {
-        ModelAndView mav = new ModelAndView("testMVC");
-        mav.addObject("message", "test");
+    public ModelAndView test() throws Exception {
+        ModelAndView mav = new ModelAndView("jsonView");
+        mav.addObject("sync", HttpClients.syncClient().get("http://www.test.com:8080/product/page.json").getContent());
+        mav.addObject("async", HttpClients.asyncClient().asyncGet("http://www.test.com:8080/product/page.json").get().getContent());
         return mav;
     }
 
