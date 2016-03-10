@@ -10,7 +10,7 @@
 * 通用的Spring框架搭建
 * Maven管理jar包
 * 通用的权限管理系统，User - Role - Acl
-* 验证码图片
+* 验证码生成及校验
 * Redis等缓存使用, 控制台
 * 动态Config配置
 * Logback + Email通知
