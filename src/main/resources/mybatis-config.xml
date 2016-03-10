@@ -28,10 +28,6 @@
         <typeAlias alias="SysUser" type="com.app.mvc.acl.domain.SysUser"></typeAlias>
     </typeAliases>
 
-    <typeHandlers>
-        <typeHandler handler="com.app.mvc.common.JodaDateTimeHandler" javaType="org.joda.time.DateTime" />
-    </typeHandlers>
-
     <plugins>
         <plugin interceptor="com.app.mvc.common.SQLMonitorInterceptor"/>
     </plugins>
