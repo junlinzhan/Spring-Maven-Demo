@@ -2,6 +2,7 @@ package com.app.mvc.business.controller;
 
 import com.app.mvc.beans.JsonData;
 import com.app.mvc.http.HttpClients;
+import com.app.mvc.rabbitmq.RabbitHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,11 @@ public class TestController {
     @ResponseBody
     @RequestMapping(value = "test.do", method = RequestMethod.GET)
     public ModelAndView test() throws Exception {
+        try {
+            RabbitHelper.getTestRabbitTemplate().convertAndSend("testSend");
+        } catch (Throwable t) {
+            log.error("添加消息到rabbitmq出错", t);
+        }
         ModelAndView mav = new ModelAndView("jsonView");
         mav.addObject("sync", HttpClients.syncClient().get("http://www.test.com:8080/product/page.json").getContent());
         mav.addObject("async", HttpClients.asyncClient().asyncGet("http://www.test.com:8080/product/page.json").get().getContent());

@@ -1,6 +1,7 @@
 package com.app.mvc.common;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -29,5 +30,16 @@ public class SpringHelper {
         if (applicationContext == null)
             return null;
         return applicationContext.getBean(name, clazz);
+    }
+
+    public static RabbitTemplate popRabbitTemplate(String provider) {
+        if(applicationContext == null) return null;
+        Object bean = applicationContext.getBean(provider);
+        if (bean instanceof RabbitTemplate) {
+            return (RabbitTemplate)bean;
+        } else {
+            throw new RuntimeException("无法找到rabbitTemplate，但是找到了对应的其他类型bean:"
+                    + bean.toString());
+        }
     }
 }
