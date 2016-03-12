@@ -2,7 +2,8 @@ package com.app.mvc.business.controller;
 
 import com.app.mvc.beans.JsonData;
 import com.app.mvc.http.HttpClients;
-import com.app.mvc.rabbitmq.RabbitHelper;
+import com.app.mvc.rabbitmq.MessageConsumeService;
+import com.app.mvc.rabbitmq.MessageProduceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,15 +22,25 @@ public class TestController {
 
     @Resource(name = "redisPool")
     private ShardedJedisPool redisPool;
+    @Resource
+    private MessageProduceService messageProduceService;
 
     @ResponseBody
-    @RequestMapping(value = "test.do", method = RequestMethod.GET)
-    public ModelAndView test() throws Exception {
+    @RequestMapping(value = "testMq.json", method = RequestMethod.GET)
+    public JsonData testRabbitMQ() throws Exception {
         try {
-            RabbitHelper.getTestRabbitTemplate().convertAndSend("testSend");
+            messageProduceService.pushToMessageQueue(String.valueOf(System.currentTimeMillis()));
+            messageProduceService.pushToMessageQueue("testQ", "t" + String.valueOf(System.currentTimeMillis()));
         } catch (Throwable t) {
             log.error("添加消息到rabbitmq出错", t);
+            return JsonData.error(t.getMessage());
         }
+        return JsonData.success();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "testHttp.json", method = RequestMethod.GET)
+    public ModelAndView testHttp() throws Exception {
         ModelAndView mav = new ModelAndView("jsonView");
         mav.addObject("sync", HttpClients.syncClient().get("http://www.test.com:8080/product/page.json").getContent());
         mav.addObject("async", HttpClients.asyncClient().asyncGet("http://www.test.com:8080/product/page.json").get().getContent());

@@ -47,10 +47,12 @@ public class DatabaseConfig {
             if (configMap.containsKey(k)) {
                 return Integer.valueOf(configMap.get(k));
             } else {
+                log.info("config use default value, key:{}, value:{}", k, defaultValue);
                 return defaultValue;
             }
         } catch (NumberFormatException e) {
             log.error("int parse error, k:{}", k, e);
+            log.info("config use default value, key:{}, value:{}", k, defaultValue);
             return defaultValue;
         }
     }
@@ -60,10 +62,12 @@ public class DatabaseConfig {
             if (configMap.containsKey(k)) {
                 return Long.valueOf(configMap.get(k));
             } else {
+                log.info("config use default value, key:{}, value:{}", k, defaultValue);
                 return defaultValue;
             }
         } catch (NumberFormatException e) {
             log.error("long parse error, k:{}", k, e);
+            log.info("config use default value, key:{}, value:{}", k, defaultValue);
             return defaultValue;
         }
     }
@@ -76,6 +80,7 @@ public class DatabaseConfig {
         if (configMap.containsKey(k)) {
             return configMap.get(k);
         } else {
+            log.info("config use default value, key:{}, value:{}", k, defaultValue);
             return defaultValue;
         }
     }
@@ -84,6 +89,7 @@ public class DatabaseConfig {
         if (configMap.containsKey(k)) {
             return Boolean.parseBoolean(configMap.get(k));
         } else {
+            log.info("config use default value, key:{}, value:{}", k, defaultValue);
             return defaultValue;
         }
     }

@@ -1,1 +1,0 @@
-package com.app.mvc.rabbitmq;import com.app.mvc.common.SpringHelper;import org.springframework.amqp.rabbit.core.RabbitTemplate;/** * Created by jimin on 16/3/11. */public class RabbitHelper {    public static RabbitTemplate getTestRabbitTemplate() {        return SpringHelper.popRabbitTemplate("testRabbitTemplate");    }}
