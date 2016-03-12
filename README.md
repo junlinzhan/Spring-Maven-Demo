@@ -27,9 +27,9 @@
 * Hibernate Validator校验
 * ThreadLocal管理进程信息
 * Junit测试
+* 队列rabbitMQ
 
 # 后续动作
-* 队列rabbitMQ
 * Nginx 路由
 * beyondadmin 动态展示
 * UV PV等计算
