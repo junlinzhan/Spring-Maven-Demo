@@ -2,7 +2,6 @@ package com.app.mvc.business.controller;
 
 import com.app.mvc.beans.JsonData;
 import com.app.mvc.http.HttpClients;
-import com.app.mvc.rabbitmq.MessageConsumeService;
 import com.app.mvc.rabbitmq.MessageProduceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -27,10 +26,10 @@ public class TestController {
 
     @ResponseBody
     @RequestMapping(value = "testMq.json", method = RequestMethod.GET)
-    public JsonData testRabbitMQ() throws Exception {
+    public JsonData testRabbitMQ(@RequestParam(value = "msg", defaultValue = "test") String msg) throws Exception {
         try {
-            messageProduceService.pushToMessageQueue(String.valueOf(System.currentTimeMillis()));
-            messageProduceService.pushToMessageQueue("testQ", "t" + String.valueOf(System.currentTimeMillis()));
+            messageProduceService.pushToMessageQueue(msg);
+            messageProduceService.pushToMessageQueue("testQ", "q_" + msg);
         } catch (Throwable t) {
             log.error("添加消息到rabbitmq出错", t);
             return JsonData.error(t.getMessage());
