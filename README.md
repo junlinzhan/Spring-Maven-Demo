@@ -28,6 +28,7 @@
 * ThreadLocal管理进程信息
 * Junit测试
 * 队列rabbitMQ
+* Zookeeper Client
 
 # 后续动作
 * Nginx 路由

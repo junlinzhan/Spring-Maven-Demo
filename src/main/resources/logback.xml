@@ -4,7 +4,7 @@
     <property name="LOG_HOME" value="${catalina.home}/logs"/>
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%p %t %c %d{yyyy-MM-dd HH:mm:ss} - %m%n</pattern>
+            <pattern>%p %c %d{yyyy-MM-dd HH:mm:ss.SSS} - %m%n</pattern>
         </encoder>
     </appender>
 
@@ -33,7 +33,7 @@
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>%p %c %d{yyyy-MM-dd HH:mm:ss.SSS}[%thread] - %m%n</pattern>
+            <pattern>%p %c %d{yyyy-MM-dd HH:mm:ss.SSS} - %m%n</pattern>
         </encoder>
     </appender>
 
