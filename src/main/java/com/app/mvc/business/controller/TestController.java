@@ -19,17 +19,17 @@ import javax.annotation.Resource;
 @RequestMapping("/test")
 public class TestController {
 
-    @Resource(name = "redisPool")
+//    @Resource(name = "redisPool")
     private ShardedJedisPool redisPool;
-    @Resource
-    private MessageProduceService messageProduceService;
+//    @Resource
+//    private MessageProduceService messageProduceService;
 
     @ResponseBody
     @RequestMapping(value = "testMq.json", method = RequestMethod.GET)
     public JsonData testRabbitMQ(@RequestParam(value = "msg", defaultValue = "test") String msg) throws Exception {
         try {
-            messageProduceService.pushToMessageQueue(msg);
-            messageProduceService.pushToMessageQueue("testQ", "q_" + msg);
+//            messageProduceService.pushToMessageQueue(msg);
+//            messageProduceService.pushToMessageQueue("testQ", "q_" + msg);
         } catch (Throwable t) {
             log.error("添加消息到rabbitmq出错", t);
             return JsonData.error(t.getMessage());
@@ -49,14 +49,15 @@ public class TestController {
     @ResponseBody
     @RequestMapping(value = "setRedis.do", method = RequestMethod.GET)
     public JsonData saveRedis(@RequestParam("k") String k, @RequestParam("v") String v, @RequestParam("timeout") int timeout) {
-        redisPool.getResource().setex(k, timeout, v);
+//        redisPool.getResource().setex(k, timeout, v);
         return JsonData.success();
     }
 
     @ResponseBody
     @RequestMapping(value = "getRedis.do", method = RequestMethod.GET)
     public JsonData getRedis(@RequestParam("k") String k) {
-        return JsonData.success(redisPool.getResource().get(k));
+//        return JsonData.success(redisPool.getResource().get(k));
+        return JsonData.success();
     }
 
     @ResponseBody

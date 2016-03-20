@@ -17,10 +17,12 @@
             </list>
         </property>
     </bean>
-
-    <import resource="spring-redis.xml"/>
-
+    <!--
+        <import resource="spring-redis.xml"/>
+    -->
+    <!--
     <import resource="spring-rabbit.xml"/>
+    -->
 
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" order="200"/>
 
