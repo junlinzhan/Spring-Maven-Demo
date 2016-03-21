@@ -31,11 +31,11 @@
 * Zookeeper Client
 * 支持多数据源
 * 支持aop
+* 相关数据报表导出
 
 # 后续动作
 * Nginx 路由
 * beyondadmin 动态展示
-* 相关数据报表导出
 * 日历插件
 * 工作流
 
