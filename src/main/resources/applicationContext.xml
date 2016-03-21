@@ -24,31 +24,56 @@
     <import resource="spring-rabbit.xml"/>
     -->
 
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" order="200"/>
 
     <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
         <property name="transactionManager" ref="transactionManager"/>
     </bean>
 
+
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="annotationClass" value="com.app.mvc.common.DBRepository"/>
         <property name="basePackage" value="com.app.mvc"/>
     </bean>
 
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="driverClassName" value="${jdbc.driverClassName}"/>
-        <property name="url" value="${jdbc.url}"/>
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
+    <bean id="db-master" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${master.jdbc.driverClassName}"/>
+        <property name="url" value="${master.jdbc.url}"/>
+        <property name="username" value="${master.jdbc.username}"/>
+        <property name="password" value="${master.jdbc.password}"/>
         <property name="initialSize" value="3"/>
         <property name="minIdle" value="3"/>
         <property name="maxActive" value="20"/>
         <property name="maxWait" value="60000"/>
     </bean>
 
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
+    <bean id="db-log" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${log.jdbc.driverClassName}"/>
+        <property name="url" value="${log.jdbc.url}"/>
+        <property name="username" value="${log.jdbc.username}"/>
+        <property name="password" value="${log.jdbc.password}"/>
+        <property name="initialSize" value="3"/>
+        <property name="minIdle" value="3"/>
+        <property name="maxActive" value="20"/>
+        <property name="maxWait" value="60000"/>
     </bean>
+
+    <!-- 动态数据源 -->
+    <bean id="dataSource" class="com.app.mvc.datasource.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="db-master" value-ref="db-master"/>
+                <entry key="db-log" value-ref="db-log"/>
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="db-master"/>
+        <property name="lenientFallback" value="false"/>
+    </bean>
+
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
@@ -59,6 +84,5 @@
             </list>
         </property>
     </bean>
-
 
 </beans>

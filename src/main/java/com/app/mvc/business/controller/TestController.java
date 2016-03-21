@@ -1,6 +1,7 @@
 package com.app.mvc.business.controller;
 
 import com.app.mvc.beans.JsonData;
+import com.app.mvc.business.service.TestDataSourceService;
 import com.app.mvc.http.HttpClients;
 import com.app.mvc.rabbitmq.MessageProduceService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,9 @@ import javax.annotation.Resource;
 @Controller
 @RequestMapping("/test")
 public class TestController {
+
+    @Resource
+    private TestDataSourceService testDataSourceService;
 
 //    @Resource(name = "redisPool")
     private ShardedJedisPool redisPool;
@@ -83,5 +87,12 @@ public class TestController {
             log.info(thread.getName());
         }
         return JsonData.success(list);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "switch.json")
+    public JsonData datasourceSwitch(@RequestParam("msg") String msg){
+        testDataSourceService.save(msg);
+        return JsonData.success();
     }
 }

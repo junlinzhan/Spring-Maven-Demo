@@ -25,7 +25,8 @@
 
     <context:component-scan base-package="com.app.mvc"/>
 
-    <aop:config proxy-target-class="true"/>
+    <!-- 打开aop注解 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <bean class="com.app.mvc.common.SpringExceptionResolver"/>
 

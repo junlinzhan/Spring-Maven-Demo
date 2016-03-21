@@ -29,6 +29,8 @@
 * Junit测试
 * 队列rabbitMQ
 * Zookeeper Client
+* 支持多数据源
+* 支持aop
 
 # 后续动作
 * Nginx 路由
