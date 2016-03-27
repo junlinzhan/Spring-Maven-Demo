@@ -1,4 +1,4 @@
-<%@ page import="org.apache.commons.lang3.StringUtils" %>
+<%@ page import="com.app.mvc.acl.util.LoginUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="foot">
     <div class="foot_mid">
@@ -6,7 +6,7 @@
                 href="news.jsp">新闻中心</a> | <a href="products.jsp">产品中心</a> | <a href="tech.jsp">圣华工艺</a> | <a
                 href="service.jsp">特色服务</a> | <a href="jion.jsp">招商加盟</a> | <a href="contact.jsp">联系我们</a>
             <div class="foot_mid_head_right">
-                <% if(StringUtils.isBlank((String)session.getAttribute("username"))){ %> <a href="signin.jsp">登 陆</a> <% } else {%> <a href="xxx">管 理</a> <%}%>
+                <% if(!LoginUtil.getUserFromCookie(request, response).isRet()){ %> <a href="signin.jsp">登 陆</a> <% } else {%> <a href="/admin/page.do">管 理</a> <%}%>
                 &nbsp;&nbsp;&nbsp;百 年 圣 华&nbsp;&nbsp;&nbsp;锻 木 成 金
             </div>
         </div>

@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
             log.info("login succeed, ip:{}, username:{}", ip, username);
             LoginUtil.saveUserToCookie(req, resp, sysUser);
             if (StringUtils.isBlank(ret)) {
-                resp.sendRedirect("index.jsp");
+                resp.sendRedirect("/admin/page.do");
             } else {
                 resp.sendRedirect(ret);
             }

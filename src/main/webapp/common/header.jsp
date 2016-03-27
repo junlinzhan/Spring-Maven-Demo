@@ -6,5 +6,5 @@
 <script type="text/javascript" src="js/jquery.plugin.js"></script>
 <script type="text/javascript" src="js/script.js"></script>
 <script type="text/javascript" src="js/tab01.js"></script>
-<link rel="shortcut icon" href="images/favicon.ico"/>
-<link rel="bookmark" href="images/favicon.ico"/>
+<link rel="shortcut icon" href="/favicon.ico"/>
+<link rel="bookmark" href="/favicon.ico"/>
