@@ -1,5 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<title>北京圣华家具有限公司</title>
+<title>北京XX家具有限公司</title>
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/public.css">
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>

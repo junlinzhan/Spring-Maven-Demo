@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="ab_video_ny">
-                    <h4>圣华家具:“全诚盛惠”3.15，六重豪礼送不停</h4>
+                    <h4>XX家具:“全诚盛惠”3.15，六重豪礼送不停</h4>
 
                     <p style="position: relative; margin-top: -15px; padding-left: 60px; color: #666666">
                         文章来源：admin　　发布时间：2015-03-13　　浏览量：855</p>
@@ -35,7 +35,7 @@
                         <p style="text-align: center"><img width="600" height="343" alt=""
                                                            src="uploads/1426211041.jpg"/></p>
 
-                        <p style="text-align: center">圣华家具:&ldquo;全诚盛惠&rdquo;3.15，六重豪礼送不停。</p>
+                        <p style="text-align: center">XX家具:&ldquo;全诚盛惠&rdquo;3.15，六重豪礼送不停。</p>
 
                         <p style="text-align: center"><img alt="" src="uploads/1426210529.jpg"/></p></div>
 

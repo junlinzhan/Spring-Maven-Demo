@@ -15,21 +15,25 @@
 </div>
 <%
     String href = request.getRequestURI();
-    int from = 8;
-    if(href.indexOf("index") >= 0 ) {
+    int from;
+    if (href.indexOf("index") >= 0) {
         from = 1;
-    } else if(href.indexOf("about") >= 0 ){
+    } else if (href.indexOf("about") >= 0) {
         from = 2;
-    } else if(href.indexOf("news") >= 0 || href.indexOf("detail") >= 0 ){
+    } else if (href.indexOf("news") >= 0 || href.indexOf("detail") >= 0) {
         from = 3;
-    } else if(href.indexOf("product") >= 0 ){
+    } else if (href.indexOf("product") >= 0) {
         from = 4;
-    } else if(href.indexOf("tech") >= 0 ){
+    } else if (href.indexOf("tech") >= 0) {
         from = 5;
-    } else if(href.indexOf("service") >= 0 ){
+    } else if (href.indexOf("service") >= 0) {
         from = 6;
-    } else if(href.indexOf("jion") >= 0 ){
+    } else if (href.indexOf("jion") >= 0) {
         from = 7;
+    } else if (href.indexOf("contact") >= 0) {
+        from = 8;
+    } else {
+        from = 1;
     }
 %>
 <script type="application/javascript">

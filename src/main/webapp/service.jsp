@@ -35,7 +35,7 @@
 
         <div class="ny_ab_right">
             <ul>
-                <li><a href="tech.jsp">圣华工艺</a></li>
+                <li><a href="tech.jsp">XX工艺</a></li>
                 <li><a class=cu href="service.jsp">特色服务</a></li>
             </ul>
         </div>

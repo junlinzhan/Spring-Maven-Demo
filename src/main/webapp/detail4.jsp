@@ -23,14 +23,14 @@
                 </div>
 
                 <div class="ab_video_ny">
-                    <h4>圣华家具“群英汇”招聘季，火热进行中</h4>
+                    <h4>XX家具“群英汇”招聘季，火热进行中</h4>
 
                     <p style="position: relative; margin-top: -15px; padding-left: 60px; color: #666666">
                         文章来源：admin　　发布时间：2015-03-13　　浏览量：587</p>
 
                     <div class="dnews">
 
-                        <p>圣华家具&ldquo;群英汇&rdquo;招聘季，火热进行中</p>
+                        <p>XX家具&ldquo;群英汇&rdquo;招聘季，火热进行中</p>
 
                         <p style="text-align: center"><img alt="" src="uploads/1426212593.jpg"/></p>
 

@@ -15,7 +15,7 @@
                 <div class="ab_lo">
                     <div class="ab_tit_left">品牌历程</div>
                     <div class="ab_tit_right_k">
-                        <div class="ab_tit_right">当前位置：<a href="index.jsp">首页</a> &gt;&gt; <a href="about.jsp">关于圣华</a>
+                        <div class="ab_tit_right">当前位置：<a href="index.jsp">首页</a> &gt;&gt; <a href="about.jsp">关于XX</a>
                             &gt;&gt; <span>品牌历程</span></div>
                         <div class="ab_tit_right_l"><img src="images/fk.gif" width=28 height=24></div>
                     </div>

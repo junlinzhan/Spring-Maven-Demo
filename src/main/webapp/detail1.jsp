@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="ab_video_ny">
-                    <h4>圣华家具-感恩献礼 总裁特批直降10%</h4>
+                    <h4>XX家具-感恩献礼 总裁特批直降10%</h4>
 
                     <p style="position: relative; margin-top: -15px; padding-left: 60px; color: #666666">
                         文章来源：admin　　发布时间：2014-11-14　　浏览量：1046</p>
@@ -31,7 +31,7 @@
                     <div class="dnews">
 
                         <p><img alt="" src="uploads/1415903464.jpg"/><br/>
-                            圣华家具-感恩献礼 总裁特批直降10%</p></div>
+                            XX家具-感恩献礼 总裁特批直降10%</p></div>
 
 
                     <div class="dnewsbd">

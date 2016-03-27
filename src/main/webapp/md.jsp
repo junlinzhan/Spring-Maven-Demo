@@ -247,7 +247,7 @@
     <div style=" float:left; width:400px; padding-right:80px;">
         <span><a href="#">牡丹江月星家居店</a> ()</span>
 
-        详细地址：黑龙江省牡丹江月星家居三楼329号圣华家具 <br>
+        详细地址：黑龙江省牡丹江月星家居三楼329号XX家具 <br>
     </div>
     <div style="float:left; width:150px;"><img src="uploads/201412211419143055.jpg" height="100" width="150"/>
     </div>
@@ -257,7 +257,7 @@
     <div style=" float:left; width:400px; padding-right:80px;">
         <span><a href="#">沈阳市居然之家</a> ()</span>
 
-        详细地址：沈阳市金卡路16号居然之家四楼圣华家具 <br>
+        详细地址：沈阳市金卡路16号居然之家四楼XX家具 <br>
     </div>
     <div style="float:left; width:150px;"><img src="uploads/201412211419143127.jpg" height="100" width="150"/>
     </div>

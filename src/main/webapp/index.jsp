@@ -2,9 +2,9 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>北京圣华家具有限公司</title>
-    <meta content="圣华家具,圣华,北京圣华家具有限公司" name="keywords"/>
-    <meta content="北京圣华家具有限公司" name="description"/>
+    <title>北京XX家具有限公司</title>
+    <meta content="XX家具,XX,北京XX家具有限公司" name="keywords"/>
+    <meta content="北京XX家具有限公司" name="description"/>
     <jsp:include page="common/header.jsp"/>
 </head>
 <body>
@@ -29,9 +29,9 @@
 <div class="cotent_line">
     <!--about-->
     <div class="about">
-        <div class="about_head"><a href="about.jsp">圣华家具</a><span>ABOUT</span></div>
+        <div class="about_head"><a href="about.jsp">XX家具</a><span>ABOUT</span></div>
         <div class="about_bot">
-            <img src="images/about.jpg" width="132" height="75" class="about_img"/>北京圣华家具有限公司成立于1988年，是一家集家具设计、制造、销售一体的大型实木家具制作企业。自创办之日起以“精、诚、实、稳的实干精神”为品牌发展之本，不断创新，旨在打造中国顶级实木家具。
+            <img src="images/about.jpg" width="132" height="75" class="about_img"/>北京XX家具有限公司成立于1988年，是一家集家具设计、制造、销售一体的大型实木家具制作企业。自创办之日起以“精、诚、实、稳的实干精神”为品牌发展之本，不断创新，旨在打造中国顶级实木家具。
         </div>
         <div class="about_mroe"><a href="about.jsp">品牌介绍 &gt;&gt;</a></div>
     </div>
@@ -40,15 +40,15 @@
         <div class="about_head"><a href="news.jsp">新闻资讯</a><span>NEWS</span></div>
         <div class="newsbot">
             <ul>
-                <li><a href="detail5.jsp" target="_blank" title="端午盛宴 钜惠来袭 悦动圣华，粽是情  高端实木，伴你行。">端午盛宴 钜惠来袭悦动圣华，粽是情 高端</a><span>2015-06-19</span></li>
+                <li><a href="detail5.jsp" target="_blank" title="端午盛宴 钜惠来袭 悦动XX，粽是情  高端实木，伴你行。">端午盛宴 钜惠来袭悦动XX，粽是情 高端</a><span>2015-06-19</span></li>
                 <li><a href="detail4.jsp" target="_blank"
-                       title="圣华家具“群英汇”招聘季，火热进行中">圣华家具“群英汇”招聘季，火热进行中</a><span>2015-03-13</span></li>
+                       title="XX家具“群英汇”招聘季，火热进行中">XX家具“群英汇”招聘季，火热进行中</a><span>2015-03-13</span></li>
                 <li><a href="detail3.jsp" target="_blank"
-                       title="圣华家具:“全诚盛惠”3.15，六重豪礼送不停">圣华家具:“全诚盛惠”3.15，六重豪礼送不</a><span>2015-03-13</span>
+                       title="XX家具:“全诚盛惠”3.15，六重豪礼送不停">XX家具:“全诚盛惠”3.15，六重豪礼送不</a><span>2015-03-13</span>
                 </li>
-                <li><a href="detail2.jsp" target="_blank" title="圣华家具年终盛典">圣华家具年终盛典</a><span>2014-12-30</span>
+                <li><a href="detail2.jsp" target="_blank" title="XX家具年终盛典">XX家具年终盛典</a><span>2014-12-30</span>
                 </li>
-                <li><a href="detail1.jsp" target="_blank" title="圣华家具-感恩献礼 总裁特批直降10%">圣华家具-感恩献礼总裁特批直降10%</a><span>2014-11-14</span></li>
+                <li><a href="detail1.jsp" target="_blank" title="XX家具-感恩献礼 总裁特批直降10%">XX家具-感恩献礼总裁特批直降10%</a><span>2014-11-14</span></li>
             </ul>
         </div>
     </div>
@@ -60,7 +60,7 @@
             <li>
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                        <td><a href="http://weibo.com/u/5243694161" target="_blank" title="访问圣华家具官方微博"><img src="images/xb1.jpg" width="101" height="40" border="0" alt="圣华家具官方微博"/></a></td>
+                        <td><a href="http://weibo.com/u/5243694161" target="_blank" title="访问XX家具官方微博"><img src="images/xb1.jpg" width="101" height="40" border="0" alt="XX家具官方微博"/></a></td>
                         <td><img src="images/wb2.jpg" width="102" height="40"/></td>
                     </tr>
                 </table>

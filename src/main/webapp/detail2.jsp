@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="ab_video_ny">
-                    <h4>圣华家具年终盛典</h4>
+                    <h4>XX家具年终盛典</h4>
 
                     <p style="position: relative; margin-top: -15px; padding-left: 60px; color: #666666">
                         文章来源：admin　　发布时间：2014-12-30　　浏览量：1047</p>

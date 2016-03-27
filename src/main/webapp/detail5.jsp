@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="ab_video_ny">
-                    <h4>端午盛宴 钜惠来袭 悦动圣华，粽是情 高端实木，伴你行。</h4>
+                    <h4>端午盛宴 钜惠来袭 悦动XX，粽是情 高端实木，伴你行。</h4>
 
                     <p style="position: relative; margin-top: -15px; padding-left: 60px; color: #666666">
                         文章来源：admin　　发布时间：2015-06-19　　浏览量：721</p>
