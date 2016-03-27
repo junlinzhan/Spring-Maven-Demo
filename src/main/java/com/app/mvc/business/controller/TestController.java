@@ -2,6 +2,7 @@ package com.app.mvc.business.controller;
 
 import com.app.mvc.beans.JsonData;
 import com.app.mvc.business.service.TestDataSourceService;
+import com.app.mvc.business.service.TestService;
 import com.app.mvc.http.HttpClients;
 import com.app.mvc.rabbitmq.MessageProduceService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,11 +23,14 @@ public class TestController {
 
     @Resource
     private TestDataSourceService testDataSourceService;
+    @Resource
+    private TestService testService;
 
 //    @Resource(name = "redisPool")
     private ShardedJedisPool redisPool;
 //    @Resource
 //    private MessageProduceService messageProduceService;
+
 
     @ResponseBody
     @RequestMapping(value = "testMq.json", method = RequestMethod.GET)
@@ -93,6 +97,13 @@ public class TestController {
     @RequestMapping(value = "switch.json")
     public JsonData datasourceSwitch(@RequestParam("msg") String msg){
         testDataSourceService.save(msg);
+        return JsonData.success();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "test.json")
+    public JsonData test(){
+        testService.start();
         return JsonData.success();
     }
 }
