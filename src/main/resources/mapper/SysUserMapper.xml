@@ -85,7 +85,7 @@
         WHERE supplier_id = #{supplierId}
     </select>
 
-    <select id="getByDeptId" parameterType="map" resultType="SysUser">
+    <select id="getPageByDeptId" parameterType="map" resultType="SysUser">
         SELECT
         <include refid="sysUserColumns"/>
         FROM sys_user
