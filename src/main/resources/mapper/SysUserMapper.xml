@@ -99,4 +99,11 @@
         FROM sys_user
         WHERE dept_id = #{deptId}
     </select>
+
+    <select id="countAvailableByDeptId" parameterType="int" resultType="int">
+        SELECT COUNT(1)
+        FROM sys_user
+        WHERE dept_id = #{deptId}
+        AND status = 1
+    </select>
 </mapper>

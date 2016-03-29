@@ -61,6 +61,12 @@
         WHERE level = #{level}
     </select>
 
+    <select id="countByParentId" parameterType="int" resultType="int">
+        SELECT COUNT(1)
+        FROM sys_dept
+        WHERE parent_id = #{id}
+    </select>
+
     <update id="batchUpdateLevel" parameterType="list">
         <foreach collection="deptList" separator=";" item="dept">
             UPDATE sys_dept
@@ -68,4 +74,9 @@
             WHERE id = #{dept.id}
         </foreach>
     </update>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM sys_dept
+        WHERE id = #{id}
+    </delete>
 </mapper>
