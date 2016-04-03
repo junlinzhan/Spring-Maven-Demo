@@ -29,7 +29,7 @@
 
     <update id="update" parameterType="SysDept">
         UPDATE sys_dept
-        WHERE name = #{name},
+        SET name = #{name},
         level = #{level},
         seq = #{seq},
         parent_id = #{parentId},
