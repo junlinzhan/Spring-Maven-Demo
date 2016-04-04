@@ -17,28 +17,32 @@ public class UserPara {
 
     private Integer id;
 
-    @Length(min = 0, max = 64, message = "用户名长度需要在64个字以内")
+    @NotNull(message = "用户名不可以为空")
+    @Length(min = 1, max = 64, message = "用户名长度需要在64个字以内")
     private String username;
 
-    @Length(min = 0, max = 32, message = "电话长度需要在32个字以内")
+    @NotNull(message = "电话不可以为空")
+    @Length(min = 1, max = 32, message = "电话长度需要在32个字以内")
     private String telephone;
 
-    @Length(min = 0, max = 32, message = "mail长度需要在32个字以内")
-    @Email(message = "mail不允许为空")
+    @NotNull(message = "邮箱不允许为空")
+    @Length(min = 10, max = 32, message = "邮箱长度需要在32个字以内")
+    @Email(message = "邮箱格式不对")
     private String mail;
 
     private Integer supplierId;
 
     private String managedSupplierIds;
 
-    @NotNull
+    @NotNull(message = "必须选择用户所在部门")
     private Integer deptId;
 
     /**
      * @see com.app.mvc.acl.enums.Status
      */
-    @Min(-1)
-    @Max(2)
+    @NotNull(message = "必须指定用户的状态")
+    @Min(value = -1, message = "用户状态不合法")
+    @Max(value = 2, message = "用户状态不合法")
     private Integer status;
     private String remark;
 
