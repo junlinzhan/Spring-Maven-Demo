@@ -22,10 +22,10 @@
     </sql>
 
     <insert id="save" parameterType="SysUser" useGeneratedKeys="true" keyColumn="id">
-        INSERT INTO sys_user (username, password, telephone, mail, desc, dept_id, status, supplier_id,
+        INSERT INTO sys_user (username, password, telephone, mail, remark, dept_id, status, supplier_id,
         managed_supplier_ids, operator, operate_ip)
-        VALUES (#{username}, #{password}, #{telephone}, #{mail}, #{desc}, #{deptId}, #{status}, #{supplierId},
-        #{managedSupplierIds}, #{operator}, #{operatorIp})
+        VALUES (#{username}, #{password}, #{telephone}, #{mail}, #{remark}, #{deptId}, #{status}, #{supplierId},
+        #{managedSupplierIds}, #{operator}, #{operateIp})
 
         <selectKey resultType="int" order="AFTER" keyProperty="id">
             SELECT LAST_INSERT_ID() AS id
@@ -105,5 +105,23 @@
         FROM sys_user
         WHERE dept_id = #{deptId}
         AND status = 1
+    </select>
+
+    <select id="countByMail" parameterType="map" resultType="int">
+        SELECT COUNT(1)
+        FROM sys_user
+        WHERE mail = #{mail}
+        <if test="id != null">
+            AND id != #{id}
+        </if>
+    </select>
+
+    <select id="countByTelephone" parameterType="map" resultType="int">
+        SELECT COUNT(1)
+        FROM sys_user
+        WHERE telephone = #{telephone}
+        <if test="id != null">
+            AND id != #{id}
+        </if>
     </select>
 </mapper>
