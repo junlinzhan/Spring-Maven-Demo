@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
         String ip = IpUtil.getUserIP(req);
 
-        SysUser sysUser = sysUserService.findByUsername(username);
+        SysUser sysUser = sysUserService.findByUsernameOrEmail(username);
         String error = "";
         String ret = req.getParameter("ret");
         if (StringUtils.isBlank(username)) {

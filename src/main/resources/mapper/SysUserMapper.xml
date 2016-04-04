@@ -70,11 +70,12 @@
         </foreach>
     </select>
 
-    <select id="findByUsername" resultType="SysUser" parameterType="string">
+    <select id="findByUsernameOrEmail" resultType="SysUser" parameterType="string">
         SELECT
         <include refid="sysUserColumns"/>
         FROM sys_user
-        WHERE username = #{username}
+        WHERE username = #{keyword}
+        OR mail = #{keyword}
         limit 1
     </select>
 
