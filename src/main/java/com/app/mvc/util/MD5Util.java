@@ -10,7 +10,7 @@ import java.security.MessageDigest;
 @Slf4j
 public class MD5Util {
 
-    public final static String MD5(String s) {
+    public final static String encrypt(String s) {
         char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
         try {
             byte[] btInput = s.getBytes();
@@ -37,6 +37,6 @@ public class MD5Util {
     }
 
     public static void main(String[] args) {
-        log.info(MD5("123456"));
+        log.info(encrypt("123456"));
     }
 }

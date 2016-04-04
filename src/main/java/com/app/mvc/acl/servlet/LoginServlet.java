@@ -47,7 +47,7 @@ public class LoginServlet extends HttpServlet {
         } else if (sysUser == null) {
             log.info("login error, username not exist, ip:{}, username:{}", ip, username);
             error = "login error, username not exist";
-        } else if (!sysUser.getPassword().equalsIgnoreCase(MD5Util.MD5(password))) {
+        } else if (!sysUser.getPassword().equalsIgnoreCase(MD5Util.encrypt(password))) {
             log.info("login error, password is error, ip:{}, username:{}, password:{}", ip, username, password);
             error = "login error, password is error";
         } else if (sysUser.getStatus() != 1) {

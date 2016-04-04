@@ -18,7 +18,7 @@ public class MailUtil {
 
         String from = DatabaseConfig.getStringValue("mail.send.from", "kanwangzjm@126.com");
         String host = DatabaseConfig.getStringValue("mail.send.smtp", "smtp.126.com");
-        String pass = DatabaseConfig.getStringValue("mail.send.password", "880103");
+        String pass = DatabaseConfig.getStringValue("mail.send.password", "xxxxxx");
         String nickname = DatabaseConfig.getStringValue("mail.send.nickname", "alert");
 
         // 发送email
