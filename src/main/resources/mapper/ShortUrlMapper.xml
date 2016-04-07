@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.mvc.shortUrl.ShortUrlDao">
+
+    <sql id="shortUrlColumns">
+        id,
+        origin,
+        current,
+        status,
+        create_time as createTime,
+        invalid_time as invalidTime
+    </sql>
+
+    <insert id="save" parameterType="com.app.mvc.shortUrl.ShortUrl">
+        INSERT INTO short_url
+        (origin, current, status, create_time, invalid_time)
+        VALUES
+        (#{origin}, #{current}, #{status}, now(), #{invalidTime})
+    </insert>
+
+    <select id="findByNewUrl" parameterType="string" resultType="com.app.mvc.shortUrl.ShortUrl">
+        SELECT <include refid="shortUrlColumns" />
+        FROM short_url
+        WHERE current = #{url}
+        limit 1
+    </select>
+</mapper>
