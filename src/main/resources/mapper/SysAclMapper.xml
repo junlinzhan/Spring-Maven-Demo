@@ -98,7 +98,7 @@
         <include refid="sysAclColumns"/>
         FROM sys_acl
         WHERE acl_module_id = #{aclModuleId}
-        ORDER BY seq ASC
+        ORDER BY seq ASC, name ASC
         limit #{page.offset}, #{page.pageSize}
     </select>
 
