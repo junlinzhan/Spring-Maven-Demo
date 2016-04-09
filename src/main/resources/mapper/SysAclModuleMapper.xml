@@ -29,7 +29,7 @@
 
     <update id="update" parameterType="SysAclModule">
         UPDATE sys_acl_module
-        WHERE name = #{name},
+        SET name = #{name},
         parent_id = #{parentId},
         level = #{level},
         status = #{status},
@@ -102,4 +102,15 @@
             WHERE id = #{aclModule.id}
         </foreach>
     </update>
+
+    <select id="countByParentId" parameterType="int" resultType="int">
+        SELECT COUNT(1)
+        FROM sys_acl_module
+        WHERE parent_id = #{parentId}
+    </select>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM sys_acl_module
+        WHERE id = #{id}
+    </delete>
 </mapper>
