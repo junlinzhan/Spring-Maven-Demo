@@ -27,7 +27,7 @@ public class SysRole {
      */
     private String name;
     /**
-     * 状态
+     * 状态, 备用
      *
      * @see com.app.mvc.acl.enums.Status
      */
@@ -37,7 +37,7 @@ public class SysRole {
      */
     private int supplierId;
     /**
-     * 角色类型
+     * 角色类型, 备用
      *
      * @see com.app.mvc.acl.enums.RoleType
      */

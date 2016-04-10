@@ -28,10 +28,9 @@
 
     <update id="update" parameterType="SysRole">
         UPDATE sys_role
-        WHERE name = #{name},
+        SET name = #{name},
         type = #{type},
         status = #{status},
-        supplier_id = #{supplierId},
         remark = #{remark},
         operator = #{operator},
         operate_time = now(),
@@ -52,4 +51,9 @@
         FROM sys_role
         WHERE supplier_id = #{supplierId}
     </select>
+
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM sys_role
+        WHERE id = #{id}
+    </delete>
 </mapper>

@@ -29,7 +29,13 @@
     </select>
 
     <delete id="deleteByRoleId" parameterType="int">
-        DELETE FROM sys_role_user
+        DELETE FROM sys_role_role
         WHERE role_id = #{id}
     </delete>
+
+    <select id="countByRoleId" parameterType="int" resultType="int">
+        SELECT COUNT(1)
+        FROM sys_role_acl
+        WHERE role_id = #{roleId}
+    </select>
 </mapper>
