@@ -16,10 +16,10 @@ public class MailUtil {
 
     public static boolean send(Mail mail) {
 
-        String from = DatabaseConfig.getStringValue("mail.send.from", "kanwangzjm@126.com");
-        String host = DatabaseConfig.getStringValue("mail.send.smtp", "smtp.126.com");
-        String pass = DatabaseConfig.getStringValue("mail.send.password", "880103");
-        String nickname = DatabaseConfig.getStringValue("mail.send.nickname", "alert");
+        String from = DatabaseConfig.getStringValue("mail.send.from", "");
+        String host = DatabaseConfig.getStringValue("mail.send.smtp", "");
+        String pass = DatabaseConfig.getStringValue("mail.send.password", "");
+        String nickname = DatabaseConfig.getStringValue("mail.send.nickname", "");
 
         HtmlEmail email = new HtmlEmail();
         try {
