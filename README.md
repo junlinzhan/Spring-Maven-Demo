@@ -5,7 +5,7 @@
 * [jquery](http://jquery.com/) 框架
 * [bootstrap](http://v3.bootcss.com/) 主要样式
 * [mustache](https://github.com/janl/mustache.js) 引擎
-* [Ace](http://responsiweb.com/themes/preview/ace/1.4/index.html) 模板渲染
+* [ace](http://responsiweb.com/themes/preview/ace/1.4/index.html) 模板渲染
 * [zTree](http://www.ztree.me/v3/main.php) jQuery树插件
 * [duallistbox](https://github.com/istvan-ujjmeszaros/bootstrap-duallistbox) 多选插件
 * 做个后台，管理前台展示数据及权限相关
@@ -23,9 +23,9 @@
 * redis等缓存使用, 控制台管理
   * [RedisAdminUI](https://github.com/ServiceStackApps/RedisAdminUI)
   * [phpmemcacheadmin](https://code.google.com/archive/p/phpmemcacheadmin/)
-* 动态配置, 埋点 - 动态加载
-* logback, email 通知
-* mybatis, sql监控(出现异常, 返回行)
+* 系统配置动态加载及更新
+* logback, email通知异常
+* mybatis, sql监控(sql中异常, 返回大量行)
 * 线程池使用, 异步回调
 * json(jackson)序列化与反序列化
 * 通用邮件配置及发送
@@ -43,7 +43,4 @@
 * 支持 aop
 * 短链接服务, 生成\跳转
 
-## 后续动作
-* 日历插件, 展示任务及跳转
-* 工作流
 
