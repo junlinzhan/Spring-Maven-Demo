@@ -7,6 +7,7 @@
 * [mustache](https://github.com/janl/mustache.js) 引擎
 * [Ace](http://responsiweb.com/themes/preview/ace/1.4/index.html) 模板渲染
 * [zTree](http://www.ztree.me/v3/main.php) jQuery树插件
+* [duallistbox](https://github.com/istvan-ujjmeszaros/bootstrap-duallistbox) 多选插件
 * 做个后台，管理前台展示数据及权限相关
 
 ## 后台 - 各种技术演练
