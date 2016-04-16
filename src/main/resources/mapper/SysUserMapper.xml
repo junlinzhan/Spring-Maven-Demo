@@ -5,10 +5,25 @@
 
 <mapper namespace="com.app.mvc.acl.dao.SysUserDao">
 
-    <sql id="sysUserColumns">
+    <sql id="sysUserWithPasswordColumns">
         id,
         username,
         password,
+        telephone,
+        mail,
+        remark,
+        dept_id as deptId,
+        status,
+        supplier_id as supplierId,
+        managed_supplier_ids as managedSupplierIds,
+        operator,
+        operate_time as operateTime,
+        operate_ip as operateIp
+    </sql>
+
+    <sql id="sysUserColumns">
+        id,
+        username,
         telephone,
         mail,
         remark,
@@ -73,7 +88,7 @@
 
     <select id="findByUsernameOrEmail" resultType="SysUser" parameterType="string">
         SELECT
-        <include refid="sysUserColumns"/>
+        <include refid="sysUserWithPasswordColumns"/>
         FROM sys_user
         WHERE username = #{keyword}
         OR mail = #{keyword}

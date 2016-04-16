@@ -27,7 +27,7 @@
 
     <delete id="deleteByRoleId" parameterType="int">
         DELETE FROM sys_role_user
-        WHERE role_id = #{id}
+        WHERE role_id = #{roleId}
     </delete>
 
     <select id="countByRoleId" parameterType="int" resultType="int">
