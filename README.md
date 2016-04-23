@@ -15,10 +15,11 @@
 * maven 管理 jar 包
 * 通用的权限管理系统 - 通过角色维护用户和权限之间的关系
   * 正常的部门、用户、角色、权限点、权限模块维护
-  * 部门树、权限模块树、用户权限树、角色权限树展示
+  * 部门树、权限模块树、用户权限树、角色权限树展示及维护
   * 操作记录查询、还原操作
   * 根据配置记录动态渲染后台菜单
   * 根据配置记录拦截请求的url
+* 系统监控, 内存、CPU、线程状态、GC情况等
 * 系统服务降级, 临时禁止某些url请求及切流量放行
 * 验证码生成及校验
 * redis等缓存使用, 控制台管理
@@ -26,7 +27,7 @@
   * [phpmemcacheadmin](https://code.google.com/archive/p/phpmemcacheadmin/)
 * 系统配置动态加载及更新
 * logback, email通知异常
-* mybatis, sql监控(sql中异常, 返回大量行)
+* mybatis, sql监控(sql中异常, 返回行过多等)
 * 线程池使用, 异步回调
 * json(jackson)序列化与反序列化
 * 通用邮件配置及发送
@@ -39,9 +40,9 @@
 * threadLocal 管理进程信息, 按需使用
 * Junit 测试
 * RabbitMQ 队列, 生产-消费, 控制台管理
-* zookeeper client
+* zookeeper client 封装
 * 支持多数据源, 根据需要切换数据库
 * 支持 aop
-* 短链接服务, 生成\跳转
+* 短链接服务, 生成、跳转
 
 
