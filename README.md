@@ -19,6 +19,7 @@
   * 操作记录查询、还原操作
   * 根据配置记录动态渲染后台菜单
   * 根据配置记录拦截请求的url
+* 系统服务降级, 临时禁止某些url请求及切流量放行
 * 验证码生成及校验
 * redis等缓存使用, 控制台管理
   * [RedisAdminUI](https://github.com/ServiceStackApps/RedisAdminUI)

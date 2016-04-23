@@ -2,6 +2,7 @@ package com.app.mvc.configuration;
 
 import com.app.mvc.beans.JsonMapper;
 import com.app.mvc.common.SpringHelper;
+import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -22,11 +23,13 @@ public class DatabaseConfig {
 
     private static Map<String, String> configMap = Maps.newConcurrentMap();
 
-    private static Map<String, List<String>> configListStringMap = Maps.newConcurrentMap();
+    private static Map<String, List<String>> listStringMap = Maps.newConcurrentMap();
 
-    private static Map<String, List<Integer>> configListIntMap = Maps.newConcurrentMap();
+    private static Map<String, List<Integer>> listIntMap = Maps.newConcurrentMap();
 
-    private static Map<String, Set<String>> configSetStringMap = Maps.newConcurrentMap();
+    private static Map<String, Set<String>> setStringMap = Maps.newConcurrentMap();
+
+    private static Map<String, Map<String, String>> mapStringStringMap = Maps.newConcurrentMap();
 
     public synchronized static void loadAllConfig() {
         log.info("load all config");
@@ -36,9 +39,12 @@ public class DatabaseConfig {
         }
         Map<String, String> tempMap = Maps.newHashMap();
         for (Configuration configuration : configurationList) {
-            tempMap.put(configuration.getK(), configuration.getV());
+            tempMap.put(configuration.getK(), configuration.getV().trim());
         }
         configMap = tempMap;
+        listStringMap = Maps.newConcurrentMap();
+        listIntMap = Maps.newConcurrentMap();
+        setStringMap = Maps.newConcurrentMap();
         log.info("config: {}", JsonMapper.obj2String(configMap));
     }
 
@@ -78,7 +84,7 @@ public class DatabaseConfig {
 
     public static String getStringValue(String k, String defaultValue) {
         if (configMap.containsKey(k)) {
-            return configMap.get(k);
+            return configMap.get(k).trim();
         } else {
             log.info("config use default value, key:{}, value:{}", k, defaultValue);
             return defaultValue;
@@ -103,8 +109,8 @@ public class DatabaseConfig {
         if (!configMap.containsKey(k)) {
             return result;
         }
-        if (configSetStringMap.containsKey(k)) {
-            return configSetStringMap.get(k);
+        if (setStringMap.containsKey(k)) {
+            return setStringMap.get(k);
         }
         String v = configMap.get(k);
         if (StringUtils.isBlank(v)) {
@@ -112,9 +118,9 @@ public class DatabaseConfig {
         }
         Iterable<String> res = Splitter.on(separator).trimResults().omitEmptyStrings().split(v);
         for (String str : res) {
-            result.add(str);
+            result.add(str.trim());
         }
-        configSetStringMap.put(k, result);
+        setStringMap.put(k, result);
         return result;
     }
 
@@ -127,8 +133,8 @@ public class DatabaseConfig {
         if (!configMap.containsKey(k)) {
             return result;
         }
-        if (configListStringMap.containsKey(k)) {
-            return configListStringMap.get(k);
+        if (listStringMap.containsKey(k)) {
+            return listStringMap.get(k);
         }
         String v = configMap.get(k);
         if (StringUtils.isBlank(v)) {
@@ -136,9 +142,9 @@ public class DatabaseConfig {
         }
         Iterable<String> res = Splitter.on(separator).trimResults().omitEmptyStrings().split(v);
         for (String str : res) {
-            result.add(str);
+            result.add(str.trim());
         }
-        configListStringMap.put(k, result);
+        listStringMap.put(k, result);
         return result;
     }
 
@@ -151,8 +157,8 @@ public class DatabaseConfig {
         if (!configMap.containsKey(k)) {
             return result;
         }
-        if (configListIntMap.containsKey(k)) {
-            return configListIntMap.get(k);
+        if (listIntMap.containsKey(k)) {
+            return listIntMap.get(k);
         }
         String v = configMap.get(k);
         if (StringUtils.isBlank(v)) {
@@ -161,13 +167,43 @@ public class DatabaseConfig {
         Iterable<String> res = Splitter.on(separator).trimResults().omitEmptyStrings().split(v);
         try {
             for (String str : res) {
-                result.add(Integer.valueOf(str));
+                result.add(Integer.valueOf(str.trim()));
             }
         } catch (NumberFormatException e) {
-            log.error("integer list parse error, k:{}", k, e);
+            log.error("List<Integer> parse error, k:{}, v:{}", k, v, e);
             return Lists.newArrayList();
         }
-        configListIntMap.put(k, result);
+        listIntMap.put(k, result);
+        return result;
+    }
+
+    public static Map<String, String> getMapValue(String k) {
+        return getMapValue(k, ";", ",");
+    }
+    public static Map<String, String> getMapValue(String k, String sep1, String sep2) {
+        Map<String, String> result = Maps.newHashMap();
+        if(!configMap.containsKey(k)) {
+            return result;
+        }
+        if(mapStringStringMap.containsKey(k)) {
+            return mapStringStringMap.get(k);
+        }
+        String v = configMap.get(k);
+        if(StringUtils.isBlank(v)) {
+            return result;
+        }
+        Iterable<String> res = Splitter.on(sep1).trimResults().omitEmptyStrings().split(v);
+        try {
+            for (String str : res) {
+                String[] temp = str.split(sep2);
+                Preconditions.checkArgument(temp.length == 2);
+                result.put(temp[0].trim(), temp[1].trim());
+            }
+        } catch (Exception e) {
+            log.error("Map<String, String> parse error, k:{}, v:{}", k, v, e);
+            return Maps.newConcurrentMap();
+        }
+        mapStringStringMap.put(k, result);
         return result;
     }
 }
