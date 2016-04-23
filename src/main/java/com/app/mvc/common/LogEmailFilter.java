@@ -4,7 +4,7 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.filter.Filter;
 import ch.qos.logback.core.spi.FilterReply;
-import com.app.mvc.configuration.DatabaseConfig;
+import com.app.mvc.config.GlobalConfig;
 import com.google.common.base.Splitter;
 import org.apache.commons.lang3.StringUtils;
 
@@ -28,13 +28,13 @@ public class LogEmailFilter extends Filter<ILoggingEvent> {
         }
 
         // 是否开通邮件通知
-        boolean isOpenEmail = DatabaseConfig.getBooleanValue("logback.email.open", false);
+        boolean isOpenEmail = GlobalConfig.getBooleanValue("logback.email.open", false);
         if (!isOpenEmail) {
             return FilterReply.DENY;
         }
 
         // 是否过滤指定的logger
-        String filterString = DatabaseConfig.getStringValue("logback.filter.msg", "");
+        String filterString = GlobalConfig.getStringValue("logback.filter.msg", "");
         if (StringUtils.isBlank(filterString)) {
             return FilterReply.ACCEPT;
         }

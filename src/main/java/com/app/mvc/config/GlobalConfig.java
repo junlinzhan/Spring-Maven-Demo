@@ -1,4 +1,4 @@
-package com.app.mvc.configuration;
+package com.app.mvc.config;
 
 import com.app.mvc.beans.JsonMapper;
 import com.app.mvc.common.SpringHelper;
@@ -19,7 +19,7 @@ import java.util.Set;
  * Created by jimin on 15/11/7.
  */
 @Slf4j
-public class DatabaseConfig {
+public class GlobalConfig {
 
     private static Map<String, String> configMap = Maps.newConcurrentMap();
 

@@ -1,4 +1,4 @@
-package com.app.mvc.configuration;
+package com.app.mvc.config;
 
 import com.app.mvc.acl.convert.BaseConvert;
 import com.app.mvc.beans.PageQuery;

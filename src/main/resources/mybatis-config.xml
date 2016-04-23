@@ -5,7 +5,7 @@
 <configuration>
 
     <settings>
-        <!-- Globally enables or disables any caches configured in any mapper under this configuration -->
+        <!-- Globally enables or disables any caches configured in any mapper under this config -->
         <setting name="cacheEnabled" value="true"/>
         <!-- Sets the number of seconds the driver will wait for a response from the database -->
         <setting name="defaultStatementTimeout" value="3000"/>

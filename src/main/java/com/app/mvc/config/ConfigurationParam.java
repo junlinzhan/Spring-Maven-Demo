@@ -1,4 +1,4 @@
-package com.app.mvc.configuration;
+package com.app.mvc.config;
 
 import lombok.Getter;
 import lombok.Setter;

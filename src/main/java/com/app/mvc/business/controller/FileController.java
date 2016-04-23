@@ -3,7 +3,7 @@ package com.app.mvc.business.controller;
 import com.app.mvc.beans.JsonData;
 import com.app.mvc.beans.JsonMapper;
 import com.app.mvc.business.bo.FileUploadBo;
-import com.app.mvc.configuration.DatabaseConfig;
+import com.app.mvc.config.GlobalConfig;
 import com.app.mvc.business.domain.FileInfo;
 import com.app.mvc.exception.NotFoundException;
 import com.app.mvc.business.service.FileInfoService;
@@ -82,7 +82,7 @@ public class FileController {
         BufferedInputStream bis = null;
         BufferedOutputStream bos = null;
 
-        String downloadPath = DatabaseConfig.getValue("file.upload.path") + fileInfo.getName();
+        String downloadPath = GlobalConfig.getValue("file.upload.path") + fileInfo.getName();
 
         long fileLength = new File(downloadPath).length();
         response.setHeader("Content-disposition", "attachment; filename=" + new String(fileInfo.getOriginName().getBytes("utf-8"), "ISO8859-1"));

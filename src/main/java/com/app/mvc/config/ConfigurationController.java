@@ -1,4 +1,4 @@
-package com.app.mvc.configuration;
+package com.app.mvc.config;
 
 import com.app.mvc.acl.util.RequestHolder;
 import com.app.mvc.beans.JsonData;
@@ -25,7 +25,7 @@ public class ConfigurationController {
     @RequestMapping("/reload.json")
     public JsonData reload() {
         log.info("reload config, username:{}", RequestHolder.getCurrentUser().getUsername());
-        DatabaseConfig.loadAllConfig();
+        GlobalConfig.loadAllConfig();
         return JsonData.success();
     }
 

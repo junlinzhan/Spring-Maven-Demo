@@ -1,7 +1,7 @@
 package com.app.mvc.common;
 
 import com.app.mvc.captcha.CaptchaImgFont;
-import com.app.mvc.configuration.DatabaseConfig;
+import com.app.mvc.config.GlobalConfig;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -14,7 +14,7 @@ public class InitData {
 
         log.info("init data start");
 
-        DatabaseConfig.loadAllConfig();
+        GlobalConfig.loadAllConfig();
         CaptchaImgFont.initImgFont();
 
         log.info("init data finish");
