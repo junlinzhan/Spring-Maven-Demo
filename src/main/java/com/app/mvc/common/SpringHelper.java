@@ -31,15 +31,4 @@ public class SpringHelper {
             return null;
         return applicationContext.getBean(name, clazz);
     }
-
-    public static RabbitTemplate popRabbitTemplate(String provider) {
-        if(applicationContext == null) return null;
-        Object bean = applicationContext.getBean(provider);
-        if (bean instanceof RabbitTemplate) {
-            return (RabbitTemplate)bean;
-        } else {
-            throw new RuntimeException("无法找到rabbitTemplate，但是找到了对应的其他类型bean:"
-                    + bean.toString());
-        }
-    }
 }
