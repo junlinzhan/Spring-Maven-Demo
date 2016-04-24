@@ -22,13 +22,14 @@
   * 根据配置记录拦截请求的url
 * 系统监控, 内存、CPU、线程状态、GC情况等(quartz定时取数)
 * 系统服务降级, 临时禁止某些url请求及切流量放行
+* 执行系统shell命令
 * 验证码生成、校验
 * redis等缓存使用, 控制台管理
   * [RedisAdminUI](https://github.com/ServiceStackApps/RedisAdminUI)
   * [phpmemcacheadmin](https://code.google.com/archive/p/phpmemcacheadmin/)
 * logback, email通知异常
 * mybatis, sql监控(sql中异常, 返回行过多等)
-* 线程池使用, 异步回调
+* 线程池使用, 异步回调, 抛弃请求监控等
 * json(jackson)序列化与反序列化
 * 通用邮件配置及发送
 * 文件上传与管理，md5 计算
