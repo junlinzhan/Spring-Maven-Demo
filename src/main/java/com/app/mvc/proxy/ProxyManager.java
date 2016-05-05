@@ -18,8 +18,6 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
@@ -39,8 +37,6 @@ import static org.apache.http.conn.params.ConnRoutePNames.DEFAULT_PROXY;
 
 @Slf4j
 public class ProxyManager {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ProxyManager.class);
 
     /**
      * 测试与代理连接的超时
@@ -101,7 +97,7 @@ public class ProxyManager {
         //清空所有代理，重新加载
         proxies.clear();
 
-        LOG.info("reload size:{}, key:{}, value:{}", conf.size(), conf.keySet(), conf.values());
+        log.info("reload size:{}, key:{}, value:{}", conf.size(), conf.keySet(), conf.values());
         String proxyIpsKey = conf.get(ProxyKeyHelper.PROXY_IPS_KEY);
 
         if (StringUtils.isEmpty(proxyIpsKey)) {
@@ -128,14 +124,14 @@ public class ProxyManager {
             }
         }
 
-        LOG.info("proxies:{}", proxies);
+        log.info("proxies:{}", proxies);
     }
 
     /**
      * 刷新代理状态
      */
     private static void refresh() {
-        if(MapUtils.isEmpty(proxies)) {
+        if (MapUtils.isEmpty(proxies)) {
             log.info("no proxy to refresh");
         }
         for (Iterator<String> iterator = proxies.keySet().iterator(); iterator.hasNext(); ) {
@@ -177,12 +173,12 @@ public class ProxyManager {
             if (proxy != null && proxy.isAlive()) {
                 HttpHost httpHost = new HttpHost(proxy.getIp(), proxy.getPort());
                 client.getParams().setParameter(DEFAULT_PROXY, httpHost);
-                LOG.info("使用代理, proxyKey={}, url={}, proxy={}", proxyKey, url, proxy);
+                log.info("使用代理, proxyKey={}, url={}, proxy={}", proxyKey, url, proxy);
             } else {
                 client.getParams().removeParameter(DEFAULT_PROXY);
             }
         } catch (Exception e) {
-            LOG.warn("proxyKey:{}, url:{} , exception:{}", proxyKey, url, e.toString(), e);
+            log.warn("proxyKey:{}, url:{} , exception:{}", proxyKey, url, e.toString(), e);
         }
     }
 
@@ -231,7 +227,7 @@ public class ProxyManager {
     private static void calcBestUrlConnect() {
         String proxyKeys = GlobalConfig.getStringValue(ProxyKeyHelper.PROXY_IPS_KEY, "");
         if (StringUtils.isEmpty(proxyKeys)) {
-            LOG.info("没有需要走自动代理的配置");
+            log.info("没有需要走自动代理的配置");
             return;
         }
         List<String> proxyKeyList = splitter.splitToList(proxyKeys);
@@ -239,19 +235,19 @@ public class ProxyManager {
             UrlConnectionChecker checker = urlConnectionCheckerMap.get(proxyKey);
             if (checker == null) {
                 // 只处理当前系统已经支持的和qconfig配置的交集部分
-                LOG.warn("没有实现检测类, key:{}", proxyKey);
+                log.warn("没有实现检测类, key:{}", proxyKey);
                 continue;
             }
 
             // 先计算直连的效果
             ProxyResponse directResponse = checkUrlConnection(proxyKey, checker, null);
-            LOG.info("直连检测, key:{}, {}", proxyKey, JsonMapper.obj2String(directResponse));
+            log.info("直连检测, key:{}, {}", proxyKey, JsonMapper.obj2String(directResponse));
 
             // 直连效果已经很好,就不需要关注代理了(代理尽量少用)
             if (directResponse != null && directResponse.isCanVisit() && directResponse.getCost() < GlobalConfig
                     .getIntValue(ProxyKeyHelper.PROXY_VISIT_BASE_MILLSECONDS, 5000)) {
                 bestProxyConnectResponseMap.put(proxyKey, toLocalResponse(directResponse));
-                LOG.info("直连效果可以,不需要继续尝试代理了, key:{}", proxyKey);
+                log.info("直连效果可以,不需要继续尝试代理了, key:{}", proxyKey);
                 continue;
             }
 
@@ -262,7 +258,7 @@ public class ProxyManager {
             for (Proxy proxy : proxySet) {
                 if (proxy.isAlive()) { // 如果这个代理是活着的,去测试对应的test url
                     ProxyResponse proxyResponse = checkUrlConnection(proxyKey, checker, proxy);
-                    LOG.info("代理检测, key:{}, {}", proxyKey, JsonMapper.obj2String(proxyResponse));
+                    log.info("代理检测, key:{}, {}", proxyKey, JsonMapper.obj2String(proxyResponse));
                     // 选出最佳效果的代理
                     if (proxyResponse != null && proxyResponse.isCanVisit()) {
                         if (proxyResponse.getCost() < bestProxyResponse.getCost()) {
@@ -273,7 +269,7 @@ public class ProxyManager {
                 }
             }
             if (!isDirectBest) {
-                LOG.info("本次检测到最佳的代理, key:{}, {}", proxyKey, JsonMapper.obj2String(bestProxyResponse));
+                log.info("本次检测到最佳的代理, key:{}, {}", proxyKey, JsonMapper.obj2String(bestProxyResponse));
                 bestProxyConnectResponseMap.put(proxyKey, bestProxyResponse);
             } else {
                 bestProxyConnectResponseMap.put(proxyKey, toLocalResponse(directResponse));
@@ -310,16 +306,16 @@ public class ProxyManager {
                 return ProxyResponse.failed(proxy, url, System.currentTimeMillis() - start);
             }
         } catch (SocketTimeoutException e1) {
-            LOG.info("key:{}, exception: SocketTimeoutException, proxy:{}", key, JsonMapper.obj2String(proxy));
+            log.info("key:{}, exception: SocketTimeoutException, proxy:{}", key, JsonMapper.obj2String(proxy));
             return ProxyResponse.failed(proxy, url, System.currentTimeMillis() - start);
         } catch (ConnectTimeoutException e2) {
-            LOG.info("key:{}, exception: ConnectTimeoutException, proxy:{}", key, JsonMapper.obj2String(proxy));
+            log.info("key:{}, exception: ConnectTimeoutException, proxy:{}", key, JsonMapper.obj2String(proxy));
             return ProxyResponse.failed(proxy, url, System.currentTimeMillis() - start);
         } catch (IOException e3) {
-            LOG.info("key:{}, exception: IOException, proxy:{}", key, JsonMapper.obj2String(proxy));
+            log.info("key:{}, exception: IOException, proxy:{}", key, JsonMapper.obj2String(proxy));
             return ProxyResponse.failed(proxy, url, System.currentTimeMillis() - start);
         } catch (Throwable t) {
-            LOG.warn(String.format("测试出现未知异常, key:%s, url:%s, %s", key, url, JsonMapper.obj2String(proxy)), t);
+            log.warn(String.format("测试出现未知异常, key:%s, url:%s, %s", key, url, JsonMapper.obj2String(proxy)), t);
             return ProxyResponse.success(proxy, url, System.currentTimeMillis() - start);
         } finally {
             if (checker.httpGet() != null) {
@@ -332,7 +328,7 @@ public class ProxyManager {
                 try {
                     EntityUtils.consume(response.getEntity());
                 } catch (Throwable t) {
-                    LOG.warn(String.format("EntityUtils.consume(entity)出现异常, url:%s, %s", url, JsonMapper.obj2String(proxy)), t);
+                    log.warn(String.format("EntityUtils.consume(entity)出现异常, url:%s, %s", url, JsonMapper.obj2String(proxy)), t);
                 }
             }
         }
