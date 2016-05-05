@@ -2,6 +2,7 @@ package com.app.mvc.config;
 
 import com.app.mvc.beans.JsonMapper;
 import com.app.mvc.common.SpringHelper;
+import com.app.mvc.proxy.ProxyManager;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
@@ -41,6 +42,7 @@ public class GlobalConfig {
         for (Configuration configuration : configurationList) {
             tempMap.put(configuration.getK(), configuration.getV().trim());
         }
+        ProxyManager.getProxyManager().reload(tempMap);
         configMap = tempMap;
         listStringMap = Maps.newConcurrentMap();
         listIntMap = Maps.newConcurrentMap();
