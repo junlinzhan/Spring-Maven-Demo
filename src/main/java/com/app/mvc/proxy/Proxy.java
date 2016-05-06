@@ -1,7 +1,7 @@
 package com.app.mvc.proxy;
 
 /**
- * @author dustin.wang created on 16/4/8 16:36
+ * Created by jimin on 16/4/28.
  */
 public class Proxy {
 

@@ -1,6 +1,7 @@
 package com.app.mvc.util;
 
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
@@ -33,8 +34,6 @@ import org.apache.http.message.BasicHeader;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.CoreConnectionPNames;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -55,23 +54,35 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Created by jimin on 16/5/5.
+ */
+@Slf4j
 public class HttpUtil {
 
-    private final static Logger logger = LoggerFactory.getLogger(HttpUtil.class);
-
-    /** 默认连接超时时间 */
+    /**
+     * 默认连接超时时间
+     */
     private static final int DEFAULT_CONNECT_TIMEOUT = 5000;
 
-    /** 默认读取超时时间 */
+    /**
+     * 默认读取超时时间
+     */
     private static final int DEFAULT_SOCKET_TIMEOUT = 60000;
 
-    /** 默认读取超时时间 */
+    /**
+     * 默认读取超时时间
+     */
     private static final int DEFAULT_CONN_REQUEST_TIMEOUT = 5000;
 
-    /** 最大连接数 */
+    /**
+     * 最大连接数
+     */
     private static final int DEFAULT_MAX_CONN_TOTAL = 200;
 
-    /** 每个host最大连接数 */
+    /**
+     * 每个host最大连接数
+     */
     private static final int DEFAULT_MAX_CONN_PER_ROUTE = 20;
 
     // TODO: 换成配置形式
@@ -82,23 +93,21 @@ public class HttpUtil {
             new ArrayBlockingQueue<Runnable>(100),               // 循环数组 + 指定大小
             new ThreadPoolExecutor.DiscardOldestPolicy()         // 抛弃最早的请求
     );
+
     /**
      * 使用缺省配置生成httpClient
-     * 
+     *
      * @return
      */
     public static HttpClient defaultClient() {
-        return HttpClients
-                .custom()
-                .setConnectionManager(getPoolingClientConnectionManager())
-                .setDefaultRequestConfig(
-                        getRequestConfig(DEFAULT_CONNECT_TIMEOUT, DEFAULT_SOCKET_TIMEOUT, DEFAULT_CONN_REQUEST_TIMEOUT))
+        return HttpClients.custom().setConnectionManager(getPoolingClientConnectionManager())
+                .setDefaultRequestConfig(getRequestConfig(DEFAULT_CONNECT_TIMEOUT, DEFAULT_SOCKET_TIMEOUT, DEFAULT_CONN_REQUEST_TIMEOUT))
                 .setMaxConnTotal(DEFAULT_MAX_CONN_TOTAL).setMaxConnPerRoute(DEFAULT_MAX_CONN_PER_ROUTE).build();
     }
 
     /**
      * 缺省connectionManager
-     * 
+     *
      * @return
      */
     public static PoolingHttpClientConnectionManager getPoolingClientConnectionManager() {
@@ -116,41 +125,38 @@ public class HttpUtil {
                 public void checkServerTrusted(X509Certificate[] certs, String authType) {
                 }
             } }, null);
-            Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder
-                    .<ConnectionSocketFactory> create().register("http", PlainConnectionSocketFactory.INSTANCE)
-                    .register("https", new SSLConnectionSocketFactory(sslContext)).build();
+            Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
+                    .register("http", PlainConnectionSocketFactory.INSTANCE).register("https", new SSLConnectionSocketFactory(sslContext)).build();
 
-            PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(
-                    socketFactoryRegistry);
+            PoolingHttpClientConnectionManager connManager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
             SocketConfig socketConfig = SocketConfig.custom().setTcpNoDelay(true).build();
             connManager.setDefaultSocketConfig(socketConfig);
-            ConnectionConfig connectionConfig = ConnectionConfig.custom()
-                    .setMalformedInputAction(CodingErrorAction.IGNORE)
+            ConnectionConfig connectionConfig = ConnectionConfig.custom().setMalformedInputAction(CodingErrorAction.IGNORE)
                     .setUnmappableInputAction(CodingErrorAction.IGNORE).setCharset(Consts.UTF_8).build();
             connManager.setDefaultConnectionConfig(connectionConfig);
             return connManager;
         } catch (Exception e) {
-            logger.error("build client connection manager failed", e);
+            log.error("build client connection manager failed", e);
             throw new RuntimeException(e);
         }
     }
 
     /**
      * 生成requestConfig
-     * 
-     * @param connectTimeout 请求超时
-     * @param socketTimeout 接口响应超时
+     *
+     * @param connectTimeout           请求超时
+     * @param socketTimeout            接口响应超时
      * @param connectionRequestTimeout 获取连接超时
      * @return
      */
     public static RequestConfig getRequestConfig(int connectTimeout, int socketTimeout, int connectionRequestTimeout) {
-        return RequestConfig.custom().setConnectionRequestTimeout(connectionRequestTimeout)
-                .setConnectTimeout(connectTimeout).setSocketTimeout(socketTimeout).build();
+        return RequestConfig.custom().setConnectionRequestTimeout(connectionRequestTimeout).setConnectTimeout(connectTimeout).setSocketTimeout(socketTimeout)
+                .build();
     }
 
     /**
      * post请求
-     * 
+     *
      * @param reqURL
      * @param params
      * @return
@@ -165,14 +171,14 @@ public class HttpUtil {
 
     /**
      * 执行post请求
-     * 
-     * @param client 指定使用的client
-     * @param httpPost 调用者给出post实例，进行header、cookie等设定
+     *
+     * @param client     指定使用的client
+     * @param httpPost   调用者给出post实例，进行header、cookie等设定
      * @param retryTimes 失败重试次数，需调用者给出
      * @return
      * @throws Exception
      */
-    public static String executePOST(HttpClient client, HttpPost httpPost, final int retryTimes , HttpClientContext context) throws Exception {
+    public static String executePOST(HttpClient client, HttpPost httpPost, final int retryTimes, HttpClientContext context) throws Exception {
         String responseText = StringUtils.EMPTY;
 
         for (int i = 0; i < retryTimes; i++) {
@@ -184,12 +190,12 @@ public class HttpUtil {
                 if (status != null && status.getStatusCode() == 200) {
                     responseText = EntityUtils.toString(resEntity, "utf-8");
                 } else {
-                    logger.error("httpPost请求响应状态异常, url:{}, responseStatus:{}", httpPost.getURI(), status);
+                    log.error("httpPost请求响应状态异常, url:{}, responseStatus:{}", httpPost.getURI(), status);
                     throw new HttpException(String.format("请求响应状态异常!状态码=%s,url=%s", status, httpPost.getURI()));
                 }
 
             } catch (Exception e) {
-                logger.error("httpPost请求异常, url:{}, errmsg:{}", httpPost.getURI(), e.getMessage(), e);
+                log.error("httpPost请求异常, url:{}, errmsg:{}", httpPost.getURI(), e.getMessage(), e);
                 if (i == retryTimes) {
                     throw e;
                 }
@@ -203,7 +209,7 @@ public class HttpUtil {
 
     /**
      * get请求
-     * 
+     *
      * @param client
      * @param reqURL
      * @param retryTimes
@@ -217,8 +223,8 @@ public class HttpUtil {
 
     /**
      * 执行get请求
-     * 
-     * @param client 指定client
+     *
+     * @param client     指定client
      * @param retryTimes
      * @return
      * @throws Exception
@@ -235,11 +241,11 @@ public class HttpUtil {
                 if (status != null && status.getStatusCode() == 200) {
                     responseText = EntityUtils.toString(resEntity, "utf-8");
                 } else {
-                    logger.error("httpGet请求响应状态异常, url:{}, responseStatus:{}", httpGet.getURI().toURL(), status);
+                    log.error("httpGet请求响应状态异常, url:{}, responseStatus:{}", httpGet.getURI().toURL(), status);
                     throw new HttpException(String.format("请求响应状态异常!状态码=%s,url=%s", status, httpGet.getURI().toURL()));
                 }
             } catch (Exception e) {
-                logger.error("httpGet请求异常, url:{}, errmsg:{}", httpGet.getURI().toURL(), e.getMessage(), e);
+                log.error("httpGet请求异常, url:{}, errmsg:{}", httpGet.getURI().toURL(), e.getMessage(), e);
                 if (i == retryTimes) {
                     throw e;
                 }
@@ -261,6 +267,7 @@ public class HttpUtil {
 
     /**
      * 根据URL 组装 HTTP POST
+     *
      * @param url
      * @param json
      * @return
@@ -279,15 +286,15 @@ public class HttpUtil {
     /**
      * 使用post请求获取url内容（HTTPS）
      *
-     * @param httpPost 请求地址
+     * @param httpPost       请求地址
      * @param connectTimeout 连接超时时间
-     * @param socketTimeout 读取超时时间
+     * @param socketTimeout  读取超时时间
      */
     public static String getPostSSLContent(HttpPost httpPost, int connectTimeout, int socketTimeout) throws Exception {
         return process(httpPost, connectTimeout, socketTimeout, true);
     }
-    private static String process(final HttpRequestBase httpUriRequest, int connectTimeout, int socketTimeout,
-                                  boolean isSSL) throws Exception {
+
+    private static String process(final HttpRequestBase httpUriRequest, int connectTimeout, int socketTimeout, boolean isSSL) throws Exception {
         final DefaultHttpClient client = getClient(connectTimeout, socketTimeout, isSSL);
         FutureTask<String> fu = new FutureTask<String>(new Callable<String>() {
             @Override
