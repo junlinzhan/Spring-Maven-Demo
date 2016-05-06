@@ -2,6 +2,7 @@ package com.app.mvc.config;
 
 import com.app.mvc.beans.JsonMapper;
 import com.app.mvc.common.SpringHelper;
+import com.app.mvc.common.UrlQPSLimiter;
 import com.app.mvc.proxy.ProxyManager;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
@@ -47,6 +48,7 @@ public class GlobalConfig {
         listStringMap = Maps.newConcurrentMap();
         listIntMap = Maps.newConcurrentMap();
         setStringMap = Maps.newConcurrentMap();
+        UrlQPSLimiter.onChange();
         log.info("config: {}", JsonMapper.obj2String(configMap));
     }
 
