@@ -1,6 +1,7 @@
 package com.app.mvc.http;
 
 import com.app.mvc.config.GlobalConfig;
+import com.app.mvc.config.GlobalConfigKey;
 import com.app.mvc.http.ext.AuthSSLInitializationError;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -23,7 +24,7 @@ class AsyncHttpClient extends SyncHttpClient {
     static ListeningExecutorService threadPool;
 
     static { //init the thread pool
-        Integer threadMax = GlobalConfig.getIntValue("http.max.thread", 20);
+        Integer threadMax = GlobalConfig.getIntValue(GlobalConfigKey.HTTP_MAX_THREAD, 20);
         if (threadMax == null || threadMax == 0) {
             threadPool = MoreExecutors.listeningDecorator(Executors.newCachedThreadPool());
         } else {

@@ -2,10 +2,11 @@ package com.app.mvc.business.service;
 
 import com.app.mvc.beans.JsonMapper;
 import com.app.mvc.business.bo.FileUploadBo;
-import com.app.mvc.common.ThreadPool;
-import com.app.mvc.config.GlobalConfig;
 import com.app.mvc.business.dao.FileInfoDao;
 import com.app.mvc.business.domain.FileInfo;
+import com.app.mvc.common.ThreadPool;
+import com.app.mvc.config.GlobalConfig;
+import com.app.mvc.config.GlobalConfigKey;
 import com.app.mvc.util.DateTimeUtil;
 import com.app.mvc.util.FileMD5Util;
 import com.google.common.collect.Lists;
@@ -67,7 +68,7 @@ public class FileInfoService {
                     String fileName = generateFilePrefix() + getSuffix(originalFilename);
 
                     //定义上传路径
-                    String path = GlobalConfig.getValue("file.upload.path") + fileName;
+                    String path = GlobalConfig.getValue(GlobalConfigKey.FILE_UPLOAD_PATH) + fileName;
                     File localFile = new File(path);
                     file.transferTo(localFile);
 

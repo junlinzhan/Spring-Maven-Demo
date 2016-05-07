@@ -2,6 +2,7 @@ package com.app.mvc.proxy;
 
 import com.app.mvc.beans.JsonMapper;
 import com.app.mvc.config.GlobalConfig;
+import com.app.mvc.config.GlobalConfigKey;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableMap;
@@ -98,7 +99,7 @@ public class ProxyManager {
         proxies.clear();
 
         log.info("reload size:{}, key:{}, value:{}", conf.size(), conf.keySet(), conf.values());
-        String proxyIpsKey = conf.get(ProxyKeyHelper.PROXY_IPS_KEY);
+        String proxyIpsKey = conf.get(GlobalConfigKey.PROXY_IPS_KEY);
 
         if (StringUtils.isEmpty(proxyIpsKey)) {
             return;
@@ -107,7 +108,7 @@ public class ProxyManager {
         List<String> proxyIpsKeyList = splitter.splitToList(proxyIpsKey);
 
         for (String proxyKey : proxyIpsKeyList) {
-            String proxyIps = conf.get(proxyKey + ProxyKeyHelper.PROXY_IPS_SUFFIX);
+            String proxyIps = conf.get(proxyKey + GlobalConfigKey.PROXY_IPS_SUFFIX);
             Map<String, String> map = mapSplitter.split(proxyIps);
 
             Set<Proxy> proxySet = proxies.get(proxyKey);
@@ -225,7 +226,7 @@ public class ProxyManager {
      * 如果选择直连, 则bestProxyConnectResponseMap中存储的信息为null
      */
     private static void calcBestUrlConnect() {
-        String proxyKeys = GlobalConfig.getStringValue(ProxyKeyHelper.PROXY_IPS_KEY, "");
+        String proxyKeys = GlobalConfig.getStringValue(GlobalConfigKey.PROXY_IPS_KEY, "");
         if (StringUtils.isEmpty(proxyKeys)) {
             log.info("没有需要走自动代理的配置");
             return;
@@ -245,7 +246,7 @@ public class ProxyManager {
 
             // 直连效果已经很好,就不需要关注代理了(代理尽量少用)
             if (directResponse != null && directResponse.isCanVisit() && directResponse.getCost() < GlobalConfig
-                    .getIntValue(ProxyKeyHelper.PROXY_VISIT_BASE_MILLSECONDS, 5000)) {
+                    .getIntValue(GlobalConfigKey.PROXY_VISIT_BASE_MILLSECONDS, 5000)) {
                 bestProxyConnectResponseMap.put(proxyKey, toLocalResponse(directResponse));
                 log.info("直连效果可以,不需要继续尝试代理了, key:{}", proxyKey);
                 continue;

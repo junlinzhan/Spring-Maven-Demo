@@ -2,6 +2,7 @@ package com.app.mvc.util;
 
 import com.app.mvc.beans.Mail;
 import com.app.mvc.config.GlobalConfig;
+import com.app.mvc.config.GlobalConfigKey;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.mail.EmailException;
@@ -16,10 +17,11 @@ public class MailUtil {
 
     public static boolean send(Mail mail) {
 
-        String from = GlobalConfig.getStringValue("mail.send.from", "");
-        String host = GlobalConfig.getStringValue("mail.send.smtp", "");
-        String pass = GlobalConfig.getStringValue("mail.send.password", "");
-        String nickname = GlobalConfig.getStringValue("mail.send.nickname", "");
+        String from = GlobalConfig.getStringValue(GlobalConfigKey.MAIL_SEND_FROM, "");
+        int port = GlobalConfig.getIntValue(GlobalConfigKey.MAIL_SEND_PORT, 25);
+        String host = GlobalConfig.getStringValue(GlobalConfigKey.MAIL_SEND_SMTP, "");
+        String pass = GlobalConfig.getStringValue(GlobalConfigKey.MAIL_SEND_PASSWORD, "");
+        String nickname = GlobalConfig.getStringValue(GlobalConfigKey.MAIL_SEND_NICKNAME, "");
 
         HtmlEmail email = new HtmlEmail();
         try {
@@ -29,6 +31,7 @@ public class MailUtil {
                 email.addTo(str);
             }
             email.setFrom(from, nickname);
+            email.setSmtpPort(port);
             email.setAuthentication(from, pass);
             email.setSubject(mail.getSubject());
             email.setMsg(mail.getMessage());

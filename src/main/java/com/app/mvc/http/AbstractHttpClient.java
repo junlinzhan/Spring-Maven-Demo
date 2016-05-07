@@ -1,6 +1,7 @@
 package com.app.mvc.http;
 
 import com.app.mvc.config.GlobalConfig;
+import com.app.mvc.config.GlobalConfigKey;
 import com.app.mvc.http.ext.AuthSSLProtocolSocketFactory;
 import com.app.mvc.http.ext.EasySSLProtocolSocketFactory;
 import com.google.common.base.Strings;
@@ -77,8 +78,8 @@ public abstract class AbstractHttpClient {
     }
 
     AbstractHttpClient() {
-        connectionTimeout(GlobalConfig.getIntValue("http.default.connection.timeout", DefaultConfig.DEFAULT_CONN_TIME));
-        socketTimeout(GlobalConfig.getIntValue("http.default.socket.timeout", DefaultConfig.DEFAULT_SOCKET_TIME));
+        connectionTimeout(GlobalConfig.getIntValue(GlobalConfigKey.HTTP_DEFAULT_CONNECTION_TIMEOUT, DefaultConfig.DEFAULT_CONN_TIME));
+        socketTimeout(GlobalConfig.getIntValue(GlobalConfigKey.HTTP_DEFAULT_SOCKET_TIMEOUT, DefaultConfig.DEFAULT_SOCKET_TIME));
     }
 
     /**
