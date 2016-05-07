@@ -1,5 +1,6 @@
 package com.app.mvc.util;
 
+import com.app.mvc.common.ThreadPool;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -47,11 +48,8 @@ import java.security.cert.X509Certificate;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.FutureTask;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -84,15 +82,6 @@ public class HttpUtil {
      * 每个host最大连接数
      */
     private static final int DEFAULT_MAX_CONN_PER_ROUTE = 20;
-
-    // TODO: 换成配置形式
-    private static ExecutorService defaultExecutor = new ThreadPoolExecutor(5,  // 核心池大小
-            10,                                                  // 最大线程数
-            120,                                                 // 空闲等待时间
-            TimeUnit.SECONDS,                                    // 时间单位
-            new ArrayBlockingQueue<Runnable>(100),               // 循环数组 + 指定大小
-            new ThreadPoolExecutor.DiscardOldestPolicy()         // 抛弃最早的请求
-    );
 
     /**
      * 使用缺省配置生成httpClient
@@ -318,7 +307,7 @@ public class HttpUtil {
                 return resultString;
             }
         });
-        defaultExecutor.execute(fu);
+        ThreadPool.execute(fu);
         String content = fu.get(connectTimeout, TimeUnit.MILLISECONDS);
         return content;
     }
