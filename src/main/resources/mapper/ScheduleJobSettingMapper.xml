@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.app.mvc.schedule.ScheduleJobSettingDao">
+
+    <sql id="scheduleJobSettingColumns">
+        id,
+        schedule_id as scheduleId,
+        group_id as groupId,
+        cron,
+        class_path as classPath,
+        status
+    </sql>
+
+    <insert id="save" parameterType="com.app.mvc.schedule.ScheduledJobSetting">
+        INSERT INTO schedule_job_setting
+        (schedule_id, group_id, cron, class_path, status)
+        VALUES
+        (#{scheduleId}, #{groupId}, #{cron}, #{classPath}, #{status})
+    </insert>
+
+    <update id="update" parameterType="com.app.mvc.schedule.ScheduledJobSetting">
+        UPDATE schedule_job_setting
+        SET cron = #{cron},
+            status = #{status}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findById" parameterType="int" resultType="com.app.mvc.schedule.ScheduledJobSetting">
+        SELECT
+        <include refid="scheduleJobSettingColumns"/>
+        FROM schedule_job_setting
+        WHERE id = #{id}
+    </select>
+
+    <select id="getListByGroupId" parameterType="string" resultType="com.app.mvc.schedule.ScheduledJobSetting">
+        SELECT
+        <include refid="scheduleJobSettingColumns"/>
+        FROM schedule_job_setting
+        WHERE group_id = #{groupId}
+    </select>
+
+    <select id="getAll" resultType="com.app.mvc.schedule.ScheduledJobSetting">
+        SELECT
+        <include refid="scheduleJobSettingColumns"/>
+        FROM schedule_job_setting
+    </select>
+</mapper>

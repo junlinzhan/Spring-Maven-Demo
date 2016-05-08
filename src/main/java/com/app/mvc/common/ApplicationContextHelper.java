@@ -1,5 +1,6 @@
 package com.app.mvc.common;
 
+import com.app.mvc.schedule.ScheduleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -17,5 +18,7 @@ public class ApplicationContextHelper implements ApplicationContextAware {
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         SpringHelper.setApplicationContext(applicationContext);
         InitData.start();
+        ScheduleService scheduleService = SpringHelper.popBean(ScheduleService.class);
+        scheduleService.scheduleAll();
     }
 }

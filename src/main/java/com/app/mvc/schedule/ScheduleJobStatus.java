@@ -1,0 +1,1 @@
+package com.app.mvc.schedule;import lombok.Getter;/** * Created by jimin on 16/5/8. */@Getterpublic enum ScheduleJobStatus {    STARTED(1, "有效"),    STOPPED(0, "无效"),    DELETED(2, "删除");    private int code;    private String desc;    ScheduleJobStatus(int code, String desc) {        this.code = code;        this.desc = desc;    }}
