@@ -47,4 +47,10 @@
         <include refid="scheduleJobSettingColumns"/>
         FROM schedule_job_setting
     </select>
+
+    <select id="countByClassPath" resultType="int" parameterType="string">
+        SELECT COUNT(1)
+        FROM schedule_job_setting
+        WHERE class_path = #{classPath}
+    </select>
 </mapper>
