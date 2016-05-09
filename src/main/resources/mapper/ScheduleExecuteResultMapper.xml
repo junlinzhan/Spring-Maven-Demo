@@ -28,11 +28,17 @@
     </update>
 
 
-    <select id="getListByScheduleId" parameterType="string" resultType="com.app.mvc.schedule.ScheduleExecuteResult">
+    <select id="getPageByScheduleId" parameterType="map" resultType="com.app.mvc.schedule.ScheduleExecuteResult">
         SELECT
         <include refid="scheduleExecuteResultColumns"/>
         FROM schedule_execute_result
         WHERE schedule_id = #{scheduleId}
+        limit #{page.offset}, #{page.pageSize}
     </select>
 
+    <select id="countByScheduleId" parameterType="string" resultType="int">
+        SELECT COUNT(1)
+        FROM schedule_execute_result
+        WHERE schedule_id = #{scheduleId}
+    </select>
 </mapper>
