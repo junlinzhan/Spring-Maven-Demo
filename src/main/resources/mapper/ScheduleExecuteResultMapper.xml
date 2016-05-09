@@ -9,8 +9,8 @@
         id,
         schedule_id as scheduleId,
         status,
-        start_time,
-        end_time
+        start_time as startTime,
+        end_time as endTime
     </sql>
 
     <insert id="save" parameterType="com.app.mvc.schedule.ScheduleExecuteResult" keyColumn="id" useGeneratedKeys="true" keyProperty="id">
