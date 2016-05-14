@@ -41,6 +41,7 @@
         SELECT
         <include refid="configurationColumn"/>
         FROM configuration
+        ORDER BY id DESC
         limit #{offset},#{pageSize}
     </select>
 

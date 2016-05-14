@@ -77,20 +77,24 @@ public class ProxyManager {
 
     private ProxyManager() {
         // 心跳检测代理是否有效
+        /*
         proxyHealthCheckScheduler.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
                 refresh();
             }
         }, 10, 10, TimeUnit.SECONDS);
+        */
 
         // 检测当前直连和代理中最佳的, 每次计算完延迟60s开始下一次
+        /*
         urlConnectCheckScheduler.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
                 calcBestUrlConnect();
             }
         }, 15, 60, TimeUnit.SECONDS);
+        */
     }
 
     public static void reload(Map<String, String> conf) {

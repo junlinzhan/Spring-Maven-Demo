@@ -33,6 +33,7 @@
         <include refid="scheduleExecuteResultColumns"/>
         FROM schedule_execute_result
         WHERE schedule_id = #{scheduleId}
+        ORDER BY id DESC
         limit #{page.offset}, #{page.pageSize}
     </select>
 
@@ -40,5 +41,14 @@
         SELECT COUNT(1)
         FROM schedule_execute_result
         WHERE schedule_id = #{scheduleId}
+    </select>
+
+    <select id="findLastExecute" parameterType="string" resultType="com.app.mvc.schedule.ScheduleExecuteResult" >
+        SELECT
+        <include refid="scheduleExecuteResultColumns"/>
+        FROM schedule_execute_result
+        WHERE schedule_id = #{scheduleId}
+        ORDER BY id DESC
+        limit 1
     </select>
 </mapper>
