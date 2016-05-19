@@ -9,8 +9,11 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.net.telnet.TelnetClient;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
@@ -44,8 +47,12 @@ public class ProxyManager {
      */
     private final static int CONNECT_TIME_OUT = 1000;
 
-    private final static Splitter.MapSplitter mapSplitter = Splitter.on(",").withKeyValueSeparator(":");
-    private final static Splitter splitter = Splitter.on(",").trimResults().omitEmptyStrings();
+    private final static Splitter proxyIpPortSplitter = Splitter.on(",").trimResults().omitEmptyStrings();
+    private final static Splitter proxyKeySplitter = Splitter.on(",").trimResults().omitEmptyStrings();
+
+    private final static int USE_PROXY_BY_CALC = 0;
+    private final static int FORCE_USE_PROXY = 1;
+    private final static int FORCE_NOT_USE_PROXY = 2;
 
     /**
      * 当前支持自动切换代理的处理类
@@ -101,6 +108,8 @@ public class ProxyManager {
 
         //清空所有代理，重新加载
         proxies.clear();
+        // 清空之前计算的结果
+        bestProxyConnectResponseMap.clear();
 
         log.info("reload size:{}, key:{}, value:{}", conf.size(), conf.keySet(), conf.values());
         String proxyIpsKey = conf.get(GlobalConfigKey.PROXY_IPS_KEY);
@@ -109,23 +118,33 @@ public class ProxyManager {
             return;
         }
 
-        List<String> proxyIpsKeyList = splitter.splitToList(proxyIpsKey);
+        List<String> proxyIpsKeyList = proxyKeySplitter.splitToList(proxyIpsKey);
 
         for (String proxyKey : proxyIpsKeyList) {
             String proxyIps = conf.get(proxyKey + GlobalConfigKey.PROXY_IPS_SUFFIX);
-            Map<String, String> map = mapSplitter.split(proxyIps);
-
+            if(StringUtils.isBlank(proxyIps)) {
+                proxyIps = conf.get(GlobalConfigKey.DEFAULT_PROXY_IPS);
+                log.info("没有配置对应的代理,使用默认配置, key:{}, setting:{}", proxyKey, proxyIps);
+            }
+            if(StringUtils.isBlank(proxyIps)) {
+                log.warn("没有配置对应的代理,也未配置默认的代理, key:{}", proxyKey);
+                continue;
+            }
             Set<Proxy> proxySet = proxies.get(proxyKey);
-
             if (proxySet == null) {
                 proxySet = Sets.newConcurrentHashSet();
                 proxies.put(proxyKey, proxySet);
             }
 
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                Proxy proxy = new Proxy(entry.getKey(), Integer.valueOf(entry.getValue()));
-                proxy.setAlive(isConnect(proxy.getIp(), proxy.getPort()));
-                proxySet.add(proxy);
+            for (String outEntry : proxyIpPortSplitter.split(proxyIps)) {
+                String[] inEntry = StringUtils.split(outEntry, ":");
+                if(ArrayUtils.isNotEmpty(inEntry) && inEntry.length == 2) {
+                    Proxy proxy = new Proxy(inEntry[0], NumberUtils.toInt(inEntry[1], 7001));
+                    proxy.setAlive(isConnect(proxy.getIp(), proxy.getPort()));
+                    proxySet.add(proxy);
+                } else {
+                    log.warn("代理配置的有问题, 过滤, key:{}, str:{}", proxyKey, outEntry);
+                }
             }
         }
 
@@ -193,6 +212,28 @@ public class ProxyManager {
      * @return 可以使用的代理, null代表不走代理
      */
     private static Proxy getProxy(String proxyKey) {
+        int proxyFlag = GlobalConfig.getIntValue(GlobalConfigKey.PROXY_FLAG, USE_PROXY_BY_CALC);
+        if (proxyFlag == FORCE_NOT_USE_PROXY) {
+            // 强制不走代理
+            // LOG.info("强制不走代理, key:{}", proxyKey);
+            return null;
+        }
+
+        // 1 强制走代理
+        // 2 没有配置自动检测url的,但是却在要切代理的列表里, 这种case主要用于处理那些通过代理商id切换代理
+        if (proxyFlag == FORCE_USE_PROXY || (!urlConnectionCheckerMap.containsKey(proxyKey) && proxies.containsKey(proxyKey))) {
+            // 强制走代理
+            Set<Proxy> proxySet = getProxiesByKey(proxyKey);
+            if (CollectionUtils.isNotEmpty(proxySet)) {
+                for (int i = 0; i < proxySet.size(); i++) {
+                    Proxy proxy = (Proxy) proxySet.toArray()[i];
+                    if (proxy.isAlive()) {
+                        // LOG.info("强制走代理, key:{}", proxyKey);
+                        return proxy;
+                    }
+                }
+            }
+        }
         if (!urlConnectionCheckerMap.containsKey(proxyKey)) {
             return null;
         }
@@ -235,7 +276,7 @@ public class ProxyManager {
             log.info("没有需要走自动代理的配置");
             return;
         }
-        List<String> proxyKeyList = splitter.splitToList(proxyKeys);
+        List<String> proxyKeyList = proxyKeySplitter.splitToList(proxyKeys);
         for (String proxyKey : proxyKeyList) {
             UrlConnectionChecker checker = urlConnectionCheckerMap.get(proxyKey);
             if (checker == null) {
