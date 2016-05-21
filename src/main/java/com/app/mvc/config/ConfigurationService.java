@@ -1,6 +1,7 @@
 package com.app.mvc.config;
 
 import com.app.mvc.acl.convert.BaseConvert;
+import com.app.mvc.acl.util.RequestHolder;
 import com.app.mvc.beans.PageQuery;
 import com.app.mvc.beans.PageResult;
 import org.springframework.stereotype.Service;
@@ -38,7 +39,7 @@ public class ConfigurationService {
             configurationDao.insert(configuration);
         } else {
             configuration.setV(param.getV());
-            configuration.setOperator(param.getOperator());
+            configuration.setOperator(RequestHolder.getCurrentUser().getUsername());
             configuration.setComment(param.getComment());
             configurationDao.updateByK(configuration);
         }
@@ -46,6 +47,6 @@ public class ConfigurationService {
     }
 
     private Configuration generate(ConfigurationParam param) {
-        return new Configuration(param.getK(), param.getV(), param.getOperator(), param.getComment());
+        return new Configuration(param.getK(), param.getV(), RequestHolder.getCurrentUser().getUsername(), param.getComment());
     }
 }

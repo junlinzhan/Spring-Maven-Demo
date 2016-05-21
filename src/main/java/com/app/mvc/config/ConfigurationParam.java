@@ -18,7 +18,5 @@ public class ConfigurationParam {
 
     private String v;
 
-    private String operator;
-
     private String comment;
 }
