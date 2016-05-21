@@ -1,17 +1,18 @@
 package com.app.mvc.config;
 
+import com.app.mvc.acl.util.RequestHolder;
 import com.app.mvc.beans.JsonMapper;
 import com.app.mvc.common.SpringHelper;
 import com.app.mvc.common.UrlQPSLimiter;
 import com.app.mvc.http.HttpClients;
 import com.app.mvc.proxy.ProxyManager;
-import com.app.mvc.util.HttpUtil;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
@@ -47,24 +48,29 @@ public class GlobalConfig {
         }
         ProxyManager.getProxyManager().reload(tempMap);
         configMap = tempMap;
-        listStringMap = Maps.newConcurrentMap();
-        listIntMap = Maps.newConcurrentMap();
-        setStringMap = Maps.newConcurrentMap();
+        listStringMap.clear();
+        listIntMap.clear();
+        setStringMap.clear();
         UrlQPSLimiter.onChange();
         log.info("config: {}", JsonMapper.obj2String(configMap));
     }
 
     public static List<String> loadMachineConfig() {
+        // 本机需要先加载config, 因为加载的机器列表可能会变
+        loadAllConfig();
+
         Set<String> machineSet = GlobalConfig.getSetValue(GlobalConfigKey.MACHINE_LIST);
         List<String> result = Lists.newArrayList();
-        for(String machine : machineSet) {
-            String url = StringUtils.join(machine, "/reload.json");
+        for (String machine : machineSet) {
+            String url = StringUtils.join(machine, "/config/reload.json");
             try {
-                HttpClients.syncClient().get(url);
-                result.add("load " + url + " success");
+                String response = HttpClients.syncClient().cookie(RequestHolder.getCurrentRequest().getHeader("cookie"), CookiePolicy.BROWSER_COMPATIBILITY)
+                        .get(url).getContent();
+                log.info("{} load config success, {}", url, response);
+                result.add(url + " load config success");
             } catch (Throwable t) {
-                log.error("load {} failed", url, t);
-                result.add("load " + url + " failed, error: " + t.getMessage());
+                log.error("{} load config failed", url, t);
+                result.add(url + "load config failed, error: " + t.getMessage());
             }
         }
         return result;
@@ -202,16 +208,17 @@ public class GlobalConfig {
     public static Map<String, String> getMapValue(String k) {
         return getMapValue(k, ";", ",");
     }
+
     public static Map<String, String> getMapValue(String k, String sep1, String sep2) {
         Map<String, String> result = Maps.newHashMap();
-        if(!configMap.containsKey(k)) {
+        if (!configMap.containsKey(k)) {
             return result;
         }
-        if(mapStringStringMap.containsKey(k)) {
+        if (mapStringStringMap.containsKey(k)) {
             return mapStringStringMap.get(k);
         }
         String v = configMap.get(k);
-        if(StringUtils.isBlank(v)) {
+        if (StringUtils.isBlank(v)) {
             return result;
         }
         Iterable<String> res = Splitter.on(sep1).trimResults().omitEmptyStrings().split(v);
