@@ -3,7 +3,9 @@ package com.app.mvc.config;
 import com.app.mvc.beans.JsonMapper;
 import com.app.mvc.common.SpringHelper;
 import com.app.mvc.common.UrlQPSLimiter;
+import com.app.mvc.http.HttpClients;
 import com.app.mvc.proxy.ProxyManager;
+import com.app.mvc.util.HttpUtil;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
@@ -50,6 +52,22 @@ public class GlobalConfig {
         setStringMap = Maps.newConcurrentMap();
         UrlQPSLimiter.onChange();
         log.info("config: {}", JsonMapper.obj2String(configMap));
+    }
+
+    public static List<String> loadMachineConfig() {
+        Set<String> machineSet = GlobalConfig.getSetValue(GlobalConfigKey.MACHINE_LIST);
+        List<String> result = Lists.newArrayList();
+        for(String machine : machineSet) {
+            String url = StringUtils.join(machine, "/reload.json");
+            try {
+                HttpClients.syncClient().get(url);
+                result.add("load " + url + " success");
+            } catch (Throwable t) {
+                log.error("load {} failed", url, t);
+                result.add("load " + url + " failed, error: " + t.getMessage());
+            }
+        }
+        return result;
     }
 
     public static int getIntValue(String k, int defaultValue) {

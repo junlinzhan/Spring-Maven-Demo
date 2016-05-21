@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by jimin on 15/11/7.
@@ -26,6 +28,13 @@ public class ConfigurationController {
     @RequestMapping("/page.do")
     public ModelAndView page() {
         return new ModelAndView("config");
+    }
+
+    @ResponseBody
+    @RequestMapping("/reloadAll.json")
+    public JsonData reloadAll() {
+        log.info("reload all machine config, username:{}", RequestHolder.getCurrentUser().getUsername());
+        return JsonData.success(GlobalConfig.loadMachineConfig());
     }
 
     @ResponseBody
