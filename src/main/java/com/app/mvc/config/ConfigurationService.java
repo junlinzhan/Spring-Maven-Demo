@@ -29,7 +29,7 @@ public class ConfigurationService {
             List<Configuration> list = configurationDao.getByPage(page);
             return PageResult.<Configuration>builder().total(count).data(list).build();
         }
-        return PageResult.<Configuration>builder().total(0).build();
+        return PageResult.<Configuration>builder().build();
     }
 
     public Configuration saveOrUpdate(ConfigurationParam param) {

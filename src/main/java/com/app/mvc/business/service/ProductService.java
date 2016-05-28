@@ -27,7 +27,7 @@ public class ProductService {
             List<Product> list = productDao.getValidProductList(page);
             return PageResult.<Product>builder().data(list).total(count).build();
         }
-        return PageResult.<Product>builder().total(0).build();
+        return PageResult.<Product>builder().build();
     }
 
     public void save(ProductPara para) {
