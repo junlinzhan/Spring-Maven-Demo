@@ -14,6 +14,7 @@ import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -77,33 +78,11 @@ public class GlobalConfig {
     }
 
     public static int getIntValue(String k, int defaultValue) {
-        try {
-            if (configMap.containsKey(k)) {
-                return Integer.valueOf(configMap.get(k));
-            } else {
-                log.info("config use default value, key:{}, value:{}", k, defaultValue);
-                return defaultValue;
-            }
-        } catch (NumberFormatException e) {
-            log.error("int parse error, k:{}", k, e);
-            log.info("config use default value, key:{}, value:{}", k, defaultValue);
-            return defaultValue;
-        }
+        return NumberUtils.toInt(configMap.get(k), defaultValue);
     }
 
     public static long getLongValue(String k, long defaultValue) {
-        try {
-            if (configMap.containsKey(k)) {
-                return Long.valueOf(configMap.get(k));
-            } else {
-                log.info("config use default value, key:{}, value:{}", k, defaultValue);
-                return defaultValue;
-            }
-        } catch (NumberFormatException e) {
-            log.error("long parse error, k:{}", k, e);
-            log.info("config use default value, key:{}, value:{}", k, defaultValue);
-            return defaultValue;
-        }
+        return NumberUtils.toLong(configMap.get(k), defaultValue);
     }
 
     public static String getValue(String k) {
