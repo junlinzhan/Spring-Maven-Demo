@@ -11,8 +11,11 @@ public class AuthSSLX509TrustManager implements X509TrustManager {
 
     private X509TrustManager defaultTrustManager = null;
 
-    /** Log object for this class. */
+    /**
+     * Log object for this class.
+     */
     private final static Logger logger = LoggerFactory.getLogger(AuthSSLX509TrustManager.class);
+
     /**
      * Constructor for AuthSSLX509TrustManager.
      */
@@ -32,12 +35,12 @@ public class AuthSSLX509TrustManager implements X509TrustManager {
                 logger.info(" Client certificate " + (c + 1) + ":");
                 logger.info("  Subject DN: " + cert.getSubjectDN());
                 logger.info("  Signature Algorithm: " + cert.getSigAlgName());
-                logger.info("  Valid from: " + cert.getNotBefore() );
+                logger.info("  Valid from: " + cert.getNotBefore());
                 logger.info("  Valid until: " + cert.getNotAfter());
                 logger.info("  Issuer: " + cert.getIssuerDN());
             }
         }
-        this.defaultTrustManager.checkServerTrusted(x509Certificates,s);
+        this.defaultTrustManager.checkServerTrusted(x509Certificates, s);
     }
 
     @Override
@@ -48,12 +51,12 @@ public class AuthSSLX509TrustManager implements X509TrustManager {
                 logger.info("  Server certificate " + (c + 1) + ":");
                 logger.info("  Subject DN: " + cert.getSubjectDN());
                 logger.info("  Signature Algorithm: " + cert.getSigAlgName());
-                logger.info("  Valid from: " + cert.getNotBefore() );
+                logger.info("  Valid from: " + cert.getNotBefore());
                 logger.info("  Valid until: " + cert.getNotAfter());
                 logger.info("  Issuer: " + cert.getIssuerDN());
             }
         }
-        this.defaultTrustManager.checkServerTrusted(x509Certificates,s);
+        this.defaultTrustManager.checkServerTrusted(x509Certificates, s);
     }
 
     @Override

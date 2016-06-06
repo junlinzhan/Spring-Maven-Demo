@@ -121,11 +121,11 @@ public class ProxyManager {
 
         for (String proxyKey : proxyIpsKeyList) {
             String proxyIps = conf.get(proxyKey + GlobalConfigKey.PROXY_IPS_SUFFIX);
-            if(StringUtils.isBlank(proxyIps)) {
+            if (StringUtils.isBlank(proxyIps)) {
                 proxyIps = conf.get(GlobalConfigKey.DEFAULT_PROXY_IPS);
                 log.info("没有配置对应的代理,使用默认配置, key:{}, setting:{}", proxyKey, proxyIps);
             }
-            if(StringUtils.isBlank(proxyIps)) {
+            if (StringUtils.isBlank(proxyIps)) {
                 log.warn("没有配置对应的代理,也未配置默认的代理, key:{}", proxyKey);
                 continue;
             }
@@ -137,7 +137,7 @@ public class ProxyManager {
 
             for (String outEntry : proxyIpPortSplitter.split(proxyIps)) {
                 String[] inEntry = StringUtils.split(outEntry, ":");
-                if(ArrayUtils.isNotEmpty(inEntry) && inEntry.length == 2) {
+                if (ArrayUtils.isNotEmpty(inEntry) && inEntry.length == 2) {
                     Proxy proxy = new Proxy(inEntry[0], NumberUtils.toInt(inEntry[1], 7001));
                     proxy.setAlive(isConnect(proxy.getIp(), proxy.getPort()));
                     proxySet.add(proxy);

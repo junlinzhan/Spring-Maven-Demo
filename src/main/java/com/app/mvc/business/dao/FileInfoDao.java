@@ -1,7 +1,7 @@
 package com.app.mvc.business.dao;
 
-import com.app.mvc.common.DBRepository;
 import com.app.mvc.business.domain.FileInfo;
+import com.app.mvc.common.DBRepository;
 import org.apache.ibatis.annotations.Param;
 
 /**

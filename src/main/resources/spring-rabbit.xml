@@ -14,12 +14,12 @@
                                host="${rabbit.host}"
                                port="${rabbit.port}"
                                username="${rabbit.username}"
-                               password="${rabbit.password}" />
+                               password="${rabbit.password}"/>
 
 
     <rabbit:admin connection-factory="connectionFactory" id="amqpAdmin"/>
 
-    <rabbit:queue id="testQ" durable="true" auto-delete="false" exclusive="false" name="testQ" />
+    <rabbit:queue id="testQ" durable="true" auto-delete="false" exclusive="false" name="testQ"/>
 
     <rabbit:direct-exchange name="testEx" durable="true" auto-delete="false" id="testEx">
         <rabbit:bindings>
@@ -27,10 +27,10 @@
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
-    <rabbit:template exchange="testEx" id="amqpTemplate" connection-factory="connectionFactory" />
+    <rabbit:template exchange="testEx" id="amqpTemplate" connection-factory="connectionFactory"/>
 
-    <bean id="messageConsumeService" class="com.app.mvc.rabbitmq.MessageConsumeService" />
+    <bean id="messageConsumeService" class="com.app.mvc.rabbitmq.MessageConsumeService"/>
     <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto">
-        <rabbit:listener ref="messageConsumeService" queues="testQ" />
+        <rabbit:listener ref="messageConsumeService" queues="testQ"/>
     </rabbit:listener-container>
 </beans>

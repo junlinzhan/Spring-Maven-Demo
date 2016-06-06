@@ -13,6 +13,7 @@ public class SerializableUtil {
 
     /**
      * 序列化
+     *
      * @param obj
      * @return
      */
@@ -23,8 +24,10 @@ public class SerializableUtil {
 
         return buf.toByteArray();
     }
+
     /**
      * 返序列化
+     *
      * @param data
      * @return
      */

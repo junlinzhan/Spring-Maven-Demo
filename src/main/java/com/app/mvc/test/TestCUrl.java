@@ -236,16 +236,16 @@ public class TestCUrl {
     }
 
     private static void ping() throws Exception {
-        long timestamp = System.currentTimeMillis()/1000;
+        long timestamp = System.currentTimeMillis() / 1000;
         String request =
-                "<Request><Header AllianceID=\"108284\" SID=\"774665\" TimeStamp=\"" + timestamp + "\" RequestType=\" OTA_Ping\" Signature=\""
-                        + SignatureUtils.CalculationSignature(timestamp + "", "108284", "8A78B8F6-C122-48DD-835B-D8F82257DA0D", "774665", " OTA_Ping") + "\" />"
+                "<Request><Header AllianceID=\"108284\" SID=\"774665\" TimeStamp=\"" + timestamp + "\" RequestType=\" OTA_Ping\" Signature=\"" + SignatureUtils
+                        .CalculationSignature(timestamp + "", "108284", "8A78B8F6-C122-48DD-835B-D8F82257DA0D", "774665", " OTA_Ping") + "\" />"
                         + "<HotelRequest><RequestBody xmlns:ns=\"http://www.opentravel.org/OTA/2003/05\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\">"
                         + "<ns:OTA_PingRQ><ns:EchoData>test</ns:EchoData></ns:OTA_PingRQ></RequestBody></HotelRequest></Request>";
         String url = "http://openapi.ctrip.com/Hotel/OTA_Ping.asmx";
         TestCUrl testCUrl = new TestCUrl();
         String response = testCUrl.SendRequestToUrl(request, url, "");
-        System.out.println(request +"\n"+response);
+        System.out.println(request + "\n" + response);
     }
 
 }

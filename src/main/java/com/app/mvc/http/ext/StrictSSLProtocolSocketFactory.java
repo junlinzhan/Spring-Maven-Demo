@@ -69,46 +69,48 @@ import java.net.UnknownHostException;
  * man-in-the-middle attacks.  Host name verification is turned <b>on</b> by
  * default but one will be able to turn it off, which might be a useful feature
  * during development.  Host name verification will make sure the SSL sessions
- * server host name matches with the the host name returned in the 
+ * server host name matches with the the host name returned in the
  * server certificates "Common Name" field of the "SubjectDN" entry.
  *
  * @author <a href="mailto:hauer@psicode.com">Sebastian Hauer</a>
- * <p>
- * DISCLAIMER: HttpClient developers DO NOT actively support this component.
- * The component is provided as a reference material, which may be inappropriate
- * for use without additional customization.
- * </p>
+ *         <p>
+ *         DISCLAIMER: HttpClient developers DO NOT actively support this component.
+ *         The component is provided as a reference material, which may be inappropriate
+ *         for use without additional customization.
+ *         </p>
  */
-public class StrictSSLProtocolSocketFactory 
-    implements SecureProtocolSocketFactory {
+public class StrictSSLProtocolSocketFactory implements SecureProtocolSocketFactory {
 
-    /** Log object for this class. */
+    /**
+     * Log object for this class.
+     */
     private final static Logger logger = LoggerFactory.getLogger(StrictSSLProtocolSocketFactory.class);
 
-    /** Host name verify flag. */
+    /**
+     * Host name verify flag.
+     */
     private boolean verifyHostname = true;
-
 
     /**
      * Constructor for StrictSSLProtocolSocketFactory.
-     * @param verifyHostname  The host name verification flag. If set to 
-     * <code>true</code> the SSL sessions server host name will be compared
-     * to the host name returned in the server certificates "Common Name" 
-     * field of the "SubjectDN" entry.  If these names do not match a
-     * Exception is thrown to indicate this.  Enabling host name verification 
-     * will help to prevent from man-in-the-middle attacks.  If set to 
-     * <code>false</code> host name verification is turned off.
-     * 
-     * Code sample:
-     *  
-     *     <blockquote>
-     *     Protocol stricthttps = new Protocol( 
-     *         "https", new StrictSSLProtocolSocketFactory(true), 443);
      *
-     *     HttpClient client = new HttpClient();
-     *     client.getHostConfiguration().setHost("localhost", 443, stricthttps);
-     *     </blockquote>
-     *
+     * @param verifyHostname The host name verification flag. If set to
+     *                       <code>true</code> the SSL sessions server host name will be compared
+     *                       to the host name returned in the server certificates "Common Name"
+     *                       field of the "SubjectDN" entry.  If these names do not match a
+     *                       Exception is thrown to indicate this.  Enabling host name verification
+     *                       will help to prevent from man-in-the-middle attacks.  If set to
+     *                       <code>false</code> host name verification is turned off.
+     *                       <p/>
+     *                       Code sample:
+     *                       <p/>
+     *                       <blockquote>
+     *                       Protocol stricthttps = new Protocol(
+     *                       "https", new StrictSSLProtocolSocketFactory(true), 443);
+     *                       <p/>
+     *                       HttpClient client = new HttpClient();
+     *                       client.getHostConfiguration().setHost("localhost", 443, stricthttps);
+     *                       </blockquote>
      */
     public StrictSSLProtocolSocketFactory(boolean verifyHostname) {
         super();
@@ -126,13 +128,13 @@ public class StrictSSLProtocolSocketFactory
     /**
      * Set the host name verification flag.
      *
-     * @param verifyHostname  The host name verification flag. If set to 
-     * <code>true</code> the SSL sessions server host name will be compared
-     * to the host name returned in the server certificates "Common Name" 
-     * field of the "SubjectDN" entry.  If these names do not match a
-     * Exception is thrown to indicate this.  Enabling host name verification 
-     * will help to prevent from man-in-the-middle attacks.  If set to 
-     * <code>false</code> host name verification is turned off.
+     * @param verifyHostname The host name verification flag. If set to
+     *                       <code>true</code> the SSL sessions server host name will be compared
+     *                       to the host name returned in the server certificates "Common Name"
+     *                       field of the "SubjectDN" entry.  If these names do not match a
+     *                       Exception is thrown to indicate this.  Enabling host name verification
+     *                       will help to prevent from man-in-the-middle attacks.  If set to
+     *                       <code>false</code> host name verification is turned off.
      */
     public void setHostnameVerification(boolean verifyHostname) {
         this.verifyHostname = verifyHostname;
@@ -141,7 +143,7 @@ public class StrictSSLProtocolSocketFactory
     /**
      * Gets the status of the host name verification flag.
      *
-     * @return  Host name verification flag.  Either <code>true</code> if host
+     * @return Host name verification flag.  Either <code>true</code> if host
      * name verification is turned on, or <code>false</code> if host name
      * verification is turned off.
      */
@@ -149,17 +151,12 @@ public class StrictSSLProtocolSocketFactory
         return verifyHostname;
     }
 
-    
     /**
-     * @see org.apache.commons.httpclient.protocol.SecureProtocolSocketFactory#createSocket(String,int,InetAddress,int)
+     * @see org.apache.commons.httpclient.protocol.SecureProtocolSocketFactory#createSocket(String, int, InetAddress, int)
      */
-    public Socket createSocket(String host, int port,
-                               InetAddress clientHost, int clientPort)
-        throws IOException, UnknownHostException {
+    public Socket createSocket(String host, int port, InetAddress clientHost, int clientPort) throws IOException, UnknownHostException {
         SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
-        SSLSocket sslSocket = (SSLSocket) sf.createSocket(host, port,
-                                                          clientHost,
-                                                          clientPort);
+        SSLSocket sslSocket = (SSLSocket) sf.createSocket(host, port, clientHost, clientPort);
         verifyHostname(sslSocket);
 
         return sslSocket;
@@ -176,25 +173,18 @@ public class StrictSSLProtocolSocketFactory
      * expires, the controller terminates and throws an {@link org.apache.commons.httpclient.ConnectTimeoutException}
      * </p>
      *
-     * @param host the host name/IP
-     * @param port the port on the host
+     * @param host         the host name/IP
+     * @param port         the port on the host
      * @param localAddress the local host name/IP to bind the socket to
-     * @param localPort the port on the local machine
-     * @param params {@link org.apache.commons.httpclient.params.HttpConnectionParams Http connection parameters}
-     *
+     * @param localPort    the port on the local machine
+     * @param params       {@link org.apache.commons.httpclient.params.HttpConnectionParams Http connection parameters}
      * @return Socket a new socket
-     *
-     * @throws IOException if an I/O error occurs while creating the socket
+     * @throws IOException          if an I/O error occurs while creating the socket
      * @throws UnknownHostException if the IP address of the host cannot be
-     * determined
+     *                              determined
      */
-    public Socket createSocket(
-        final String host,
-        final int port,
-        final InetAddress localAddress,
-        final int localPort,
-        final HttpConnectionParams params
-    ) throws IOException, UnknownHostException, ConnectTimeoutException {
+    public Socket createSocket(final String host, final int port, final InetAddress localAddress, final int localPort, final HttpConnectionParams params)
+            throws IOException, UnknownHostException, ConnectTimeoutException {
         if (params == null) {
             throw new IllegalArgumentException("Parameters may not be null");
         }
@@ -211,15 +201,14 @@ public class StrictSSLProtocolSocketFactory
             socket.bind(localaddr);
             socket.connect(remoteaddr, timeout);
         }
-        verifyHostname((SSLSocket)socket);
+        verifyHostname((SSLSocket) socket);
         return socket;
     }
 
     /**
-     * @see org.apache.commons.httpclient.protocol.SecureProtocolSocketFactory#createSocket(String,int)
+     * @see org.apache.commons.httpclient.protocol.SecureProtocolSocketFactory#createSocket(String, int)
      */
-    public Socket createSocket(String host, int port)
-        throws IOException, UnknownHostException {
+    public Socket createSocket(String host, int port) throws IOException, UnknownHostException {
         SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
         SSLSocket sslSocket = (SSLSocket) sf.createSocket(host, port);
         verifyHostname(sslSocket);
@@ -228,34 +217,29 @@ public class StrictSSLProtocolSocketFactory
     }
 
     /**
-     * @see org.apache.commons.httpclient.protocol.SecureProtocolSocketFactory#createSocket(Socket,String,int,boolean)
+     * @see org.apache.commons.httpclient.protocol.SecureProtocolSocketFactory#createSocket(Socket, String, int, boolean)
      */
-    public Socket createSocket(Socket socket, String host, int port,
-                               boolean autoClose)
-        throws IOException, UnknownHostException {
+    public Socket createSocket(Socket socket, String host, int port, boolean autoClose) throws IOException, UnknownHostException {
         SSLSocketFactory sf = (SSLSocketFactory) SSLSocketFactory.getDefault();
-        SSLSocket sslSocket = (SSLSocket) sf.createSocket(socket, host,
-                                                          port, autoClose);
+        SSLSocket sslSocket = (SSLSocket) sf.createSocket(socket, host, port, autoClose);
         verifyHostname(sslSocket);
 
         return sslSocket;
     }
 
-
     /**
      * Describe <code>verifyHostname</code> method here.
      *
      * @param socket a <code>SSLSocket</code> value
-     * @exception SSLPeerUnverifiedException  If there are problems obtaining
-     * the server certificates from the SSL session, or the server host name
-     * does not match with the "Common Name" in the server certificates
-     * SubjectDN.
-     * @exception UnknownHostException  If we are not able to resolve
-     * the SSL sessions returned server host name. 
+     * @throws SSLPeerUnverifiedException If there are problems obtaining
+     *                                    the server certificates from the SSL session, or the server host name
+     *                                    does not match with the "Common Name" in the server certificates
+     *                                    SubjectDN.
+     * @throws UnknownHostException       If we are not able to resolve
+     *                                    the SSL sessions returned server host name.
      */
-    private void verifyHostname(SSLSocket socket) 
-        throws SSLPeerUnverifiedException, UnknownHostException {
-        if (! verifyHostname) 
+    private void verifyHostname(SSLSocket socket) throws SSLPeerUnverifiedException, UnknownHostException {
+        if (!verifyHostname)
             return;
 
         SSLSession session = socket.getSession();
@@ -263,14 +247,13 @@ public class StrictSSLProtocolSocketFactory
         try {
             InetAddress addr = InetAddress.getByName(hostname);
         } catch (UnknownHostException uhe) {
-            throw new UnknownHostException("Could not resolve SSL sessions "
-                                           + "server hostname: " + hostname);
+            throw new UnknownHostException("Could not resolve SSL sessions " + "server hostname: " + hostname);
         }
-        
+
         X509Certificate[] certs = session.getPeerCertificateChain();
-        if (certs == null || certs.length == 0) 
+        if (certs == null || certs.length == 0)
             throw new SSLPeerUnverifiedException("No server certificates found!");
-        
+
         //get the servers DN in its string representation
         String dn = certs[0].getSubjectDN().getName();
 
@@ -289,19 +272,17 @@ public class StrictSSLProtocolSocketFactory
                 logger.debug("Target hostname valid: " + cn);
             }
         } else {
-            throw new SSLPeerUnverifiedException(
-                "HTTPS hostname invalid: expected '" + hostname + "', received '" + cn + "'");
+            throw new SSLPeerUnverifiedException("HTTPS hostname invalid: expected '" + hostname + "', received '" + cn + "'");
         }
     }
 
-
     /**
-     * Parses a X.500 distinguished name for the value of the 
+     * Parses a X.500 distinguished name for the value of the
      * "Common Name" field.
      * This is done a bit sloppy right now and should probably be done a bit
      * more according to <code>RFC 2253</code>.
      *
-     * @param dn  a X.500 distinguished name.
+     * @param dn a X.500 distinguished name.
      * @return the value of the "Common Name" field.
      */
     private String getCN(String dn) {
@@ -311,21 +292,20 @@ public class StrictSSLProtocolSocketFactory
             return null;
         }
         //get the remaining DN without CN=
-        dn = dn.substring(i + 3);  
+        dn = dn.substring(i + 3);
         // System.out.println("dn=" + dn);
         char[] dncs = dn.toCharArray();
         for (i = 0; i < dncs.length; i++) {
-            if (dncs[i] == ','  && i > 0 && dncs[i - 1] != '\\') {
+            if (dncs[i] == ',' && i > 0 && dncs[i - 1] != '\\') {
                 break;
             }
         }
         return dn.substring(0, i);
     }
-    
+
     public boolean equals(Object obj) {
         if ((obj != null) && obj.getClass().equals(StrictSSLProtocolSocketFactory.class)) {
-            return ((StrictSSLProtocolSocketFactory) obj).getHostnameVerification() 
-                == this.verifyHostname;
+            return ((StrictSSLProtocolSocketFactory) obj).getHostnameVerification() == this.verifyHostname;
         } else {
             return false;
         }

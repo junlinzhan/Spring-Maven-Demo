@@ -4,7 +4,6 @@ import com.app.mvc.beans.JsonData;
 import com.app.mvc.business.service.TestDataSourceService;
 import com.app.mvc.business.service.TestService;
 import com.app.mvc.http.HttpClients;
-import com.app.mvc.rabbitmq.MessageProduceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,18 +25,17 @@ public class TestController {
     @Resource
     private TestService testService;
 
-//    @Resource(name = "redisPool")
+    //    @Resource(name = "redisPool")
     private ShardedJedisPool redisPool;
-//    @Resource
-//    private MessageProduceService messageProduceService;
-
+    //    @Resource
+    //    private MessageProduceService messageProduceService;
 
     @ResponseBody
     @RequestMapping(value = "testMq.json", method = RequestMethod.GET)
     public JsonData testRabbitMQ(@RequestParam(value = "msg", defaultValue = "test") String msg) throws Exception {
         try {
-//            messageProduceService.pushToMessageQueue(msg);
-//            messageProduceService.pushToMessageQueue("testQ", "q_" + msg);
+            //            messageProduceService.pushToMessageQueue(msg);
+            //            messageProduceService.pushToMessageQueue("testQ", "q_" + msg);
         } catch (Throwable t) {
             log.error("添加消息到rabbitmq出错", t);
             return JsonData.error(t.getMessage());
@@ -57,20 +55,20 @@ public class TestController {
     @ResponseBody
     @RequestMapping(value = "setRedis.do", method = RequestMethod.GET)
     public JsonData saveRedis(@RequestParam("k") String k, @RequestParam("v") String v, @RequestParam("timeout") int timeout) {
-//        redisPool.getResource().setex(k, timeout, v);
+        //        redisPool.getResource().setex(k, timeout, v);
         return JsonData.success();
     }
 
     @ResponseBody
     @RequestMapping(value = "getRedis.do", method = RequestMethod.GET)
     public JsonData getRedis(@RequestParam("k") String k) {
-//        return JsonData.success(redisPool.getResource().get(k));
+        //        return JsonData.success(redisPool.getResource().get(k));
         return JsonData.success();
     }
 
     @ResponseBody
     @RequestMapping(value = "thread.json")
-    public JsonData threadGroup(){
+    public JsonData threadGroup() {
         ThreadGroup group = Thread.currentThread().getThreadGroup();
         ThreadGroup topGroup = group;
         // 遍历线程组树，获取根线程组
@@ -95,14 +93,14 @@ public class TestController {
 
     @ResponseBody
     @RequestMapping(value = "switch.json")
-    public JsonData datasourceSwitch(@RequestParam("msg") String msg){
+    public JsonData datasourceSwitch(@RequestParam("msg") String msg) {
         testDataSourceService.save(msg);
         return JsonData.success();
     }
 
     @ResponseBody
     @RequestMapping(value = "test.json")
-    public JsonData test(){
+    public JsonData test() {
         testService.start();
         return JsonData.success();
     }
