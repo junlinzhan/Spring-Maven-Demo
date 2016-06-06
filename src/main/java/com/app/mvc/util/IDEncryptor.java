@@ -3,8 +3,7 @@ package com.app.mvc.util;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
@@ -12,9 +11,8 @@ import java.util.List;
  * 通用加密解密工具，支持Integer加密解密。生成10位加密结果
  * Created by jimin on 16/2/10
  */
+@Slf4j
 public class IDEncryptor {
-
-    private final static Logger logger = LoggerFactory.getLogger(IDEncryptor.class);
 
     //TODO use object pool to reuse IDEncryptor
     //Take care! IDEncryptor is not thread safe
@@ -166,7 +164,7 @@ public class IDEncryptor {
         try {
             str = this.encrypt(id);
         } catch (Exception e) {
-            logger.warn("error in encrypt. id:" + id);
+            log.warn("error in encrypt. id:" + id);
             // e.printStackTrace();
         }
         return str;
@@ -177,7 +175,7 @@ public class IDEncryptor {
         try {
             id = this.decipher(Long.valueOf(str));
         } catch (Exception e) {
-            logger.warn("error in decrypt. str:" + str);
+            log.warn("error in decrypt. str:" + str);
             // e.printStackTrace();
         }
         return id;

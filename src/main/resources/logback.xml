@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <property name="LOG_HOME" value="${catalina.home}/logs"/>
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%p %c %d{yyyy-MM-dd HH:mm:ss.SSS} - %m%n</pattern>
@@ -25,20 +24,8 @@
     -->
     <!-- acl end -->
 
-    <appender name="logAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${catalina.home}/logs/app.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${catalina.home}/logs/app.log.%d{yyyy-MM-dd}</fileNamePattern>
-            <append>true</append>
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>%p %c %d{yyyy-MM-dd HH:mm:ss.SSS} - %m%n</pattern>
-        </encoder>
-    </appender>
-
     <!-- smtp报警设置 -->
-    <appender name="Email" class="ch.qos.logback.classic.net.SMTPAppender">
+    <appender name="email" class="ch.qos.logback.classic.net.SMTPAppender">
         <SMTPHost>smtp.126.com</SMTPHost>
         <SMTPPort>25</SMTPPort>
         <Username>kanwangzjm@126.com</Username>
@@ -66,7 +53,7 @@
 
     <root level="INFO">
         <appender-ref ref="console" />
-        <appender-ref ref="Email" />
+        <appender-ref ref="email" />
     </root>
 
 </configuration>
