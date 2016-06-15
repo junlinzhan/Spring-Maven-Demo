@@ -286,6 +286,12 @@
             <version>3.1</version>
         </dependency>
 
+        <!-- druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.5</version>
+        </dependency>
 
     </dependencies>
 

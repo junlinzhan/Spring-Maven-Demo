@@ -40,7 +40,7 @@
         <property name="basePackage" value="com.app.mvc"/>
     </bean>
 
-    <bean id="db-master" class="org.apache.commons.dbcp.BasicDataSource">
+    <bean id="db-master" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="driverClassName" value="${master.jdbc.driverClassName}"/>
         <property name="url" value="${master.jdbc.url}"/>
         <property name="username" value="${master.jdbc.username}"/>
@@ -49,6 +49,7 @@
         <property name="minIdle" value="3"/>
         <property name="maxActive" value="20"/>
         <property name="maxWait" value="60000"/>
+        <property name="filters" value="stat" />
     </bean>
 
     <bean id="db-log" class="org.apache.commons.dbcp.BasicDataSource">
@@ -83,6 +84,12 @@
                 <value>classpath*:mapper/*.xml</value>
             </list>
         </property>
+    </bean>
+
+    <!-- druid -->
+    <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+        <property name="slowSqlMillis" value="3000" />
+        <property name="logSlowSql" value="true" />
     </bean>
 
 </beans>
