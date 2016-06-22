@@ -3,7 +3,6 @@ package com.app.mvc.config;
 import com.app.mvc.acl.util.RequestHolder;
 import com.app.mvc.beans.JsonMapper;
 import com.app.mvc.common.SpringHelper;
-import com.app.mvc.common.QPSLimiter;
 import com.app.mvc.http.HttpClients;
 import com.app.mvc.proxy.ProxyManager;
 import com.google.common.base.Preconditions;
