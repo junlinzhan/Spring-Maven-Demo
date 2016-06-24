@@ -10,15 +10,9 @@
     <context:property-placeholder location="classpath*:redis.properties"/>
 
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
-        <property name="maxActive" value="50"/>
-        <property name="maxIdle" value="8"/>
-        <property name="maxWait" value="1000"/>
-        <property name="testOnBorrow" value="true"/>
-        <property name="testOnReturn" value="true"/>
-        <!-- <property name="testWhileIdle" value="true"/> -->
     </bean>
 
-    <bean id="redisPool" class="redis.clients.jedis.ShardedJedisPool" scope="singleton">
+    <bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool" scope="singleton">
         <constructor-arg index="0" ref="jedisPoolConfig"/>
         <constructor-arg index="1">
             <list>
@@ -26,7 +20,6 @@
                     <constructor-arg name="host" value="${redis.ip}"/>
                     <constructor-arg name="port" value="${redis.port}"/>
                     <constructor-arg name="timeout" value="${redis.timeout}"/>
-                    <constructor-arg name="weight" value="1"/>
                 </bean>
             </list>
         </constructor-arg>

@@ -4,6 +4,7 @@ import com.app.mvc.beans.JsonData;
 import com.app.mvc.business.service.TestDataSourceService;
 import com.app.mvc.business.service.TestService;
 import com.app.mvc.http.HttpClients;
+import com.app.mvc.redis.RedisPool;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import redis.clients.jedis.ShardedJedisPool;
 
 import javax.annotation.Resource;
 
@@ -25,8 +25,8 @@ public class TestController {
     @Resource
     private TestService testService;
 
-    //    @Resource(name = "redisPool")
-    private ShardedJedisPool redisPool;
+    // @Resource(name = "redisPool")
+    private RedisPool redisPool;
     //    @Resource
     //    private MessageProduceService messageProduceService;
 
@@ -55,15 +55,15 @@ public class TestController {
     @ResponseBody
     @RequestMapping(value = "setRedis.do", method = RequestMethod.GET)
     public JsonData saveRedis(@RequestParam("k") String k, @RequestParam("v") String v, @RequestParam("timeout") int timeout) {
-        //        redisPool.getResource().setex(k, timeout, v);
+        redisPool.instance().setex(k, timeout, v);
         return JsonData.success();
     }
 
     @ResponseBody
     @RequestMapping(value = "getRedis.do", method = RequestMethod.GET)
     public JsonData getRedis(@RequestParam("k") String k) {
-        //        return JsonData.success(redisPool.getResource().get(k));
-        return JsonData.success();
+        return JsonData.success(redisPool.instance().get(k));
+        //return JsonData.success();
     }
 
     @ResponseBody
