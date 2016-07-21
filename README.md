@@ -48,4 +48,5 @@
 * 支持请求使用代理, 及动态选择代理
 * 添加druid监控,使用/acl/druid/index.html访问
 
-
+## 其他
+* 项目中log基本都使用@Slf4j提供，需要IDE支持Lombok插件
