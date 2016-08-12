@@ -51,6 +51,7 @@ public class GlobalConfig {
         listStringMap.clear();
         listIntMap.clear();
         setStringMap.clear();
+        mapStringStringMap.clear();
         log.info("config: {}", JsonMapper.obj2String(configMap));
     }
 
