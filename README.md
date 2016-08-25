@@ -26,9 +26,7 @@
 * 系统定时任务调度(Quartz)管理, 动态开启、关闭、调整调度及执行开始结束状态监控
 * 执行系统shell命令
 * 验证码生成、校验
-* redis等缓存使用, 控制台管理
-  * [RedisAdminUI](https://github.com/ServiceStackApps/RedisAdminUI)
-  * [phpmemcacheadmin](https://code.google.com/archive/p/phpmemcacheadmin/)
+* redis等缓存使用
 * logback, email通知异常
 * mybatis, sql监控(sql中异常, 返回行过多等)
 * 线程池使用, 异步回调, 抛弃请求监控等
