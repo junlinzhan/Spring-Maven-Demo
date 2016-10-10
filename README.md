@@ -47,6 +47,7 @@
 * 添加druid监控,使用/acl/druid/index.html访问
 
 ## 其他
-* 项目中log基本都使用@Slf4j提供，需要IDE支持Lombok插件
+* 强烈建议使用Intellij IDEA作为开发工具，eclipse需要手动做些设置才能正常使用, 项目启动要加载Resources包括：resources和resource.dev(或prod,区分环境选择）
+* 项目中log基本都使用@Slf4j提供，需要开发工具支持Lombok插件，相关注解包括：@Getter，@Setter，@ToString，@AllArgsConstuctor, @NoArgsConstructor,@Builder
 * 个别功能只适合单机，比如动态修改quartz调度、qps控制等
-* 如有问题，可加微信沟通，个人微信号：kanwangzjm
+* 如有问题，可加微信沟通，个人微信号：kanwangzjm，添加时请注明来自github
