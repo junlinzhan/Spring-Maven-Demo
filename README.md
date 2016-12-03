@@ -8,20 +8,20 @@
 * Redis 非必须, 缓存用, 可在配置中打开
 * Rabbit 非必须, 队列用, 可在配置打开
 * Zookeeper 非必须, 可在配置中打开
+* Lombok, 需要开发环境(IDEA或eclipse)支持
 
 ## 前台 - 用户页面 + 管理界面
-* 一个主要供展示家具产品的网站, 项目名称因此而来
+* 一个主要供展示家具产品的网站, 项目名称因此而来, 但是前台是扒下来的, 没啥可看的
+* 做个后台，管理前台展示数据及权限相关
 * [jquery](http://jquery.com/) 框架
 * [bootstrap](http://v3.bootcss.com/) 主要样式
 * [mustache](https://github.com/janl/mustache.js) 引擎
 * [ace](http://responsiweb.com/themes/preview/ace/1.4/index.html) 模板渲染
 * [zTree](http://www.ztree.me/v3/main.php) jQuery树插件
 * [duallistbox](https://github.com/istvan-ujjmeszaros/bootstrap-duallistbox) 多选插件
-* 做个后台，管理前台展示数据及权限相关
 
 ## 后台 - 各种技术演练
 * 通用的 spring 框架搭建
-* maven 管理 jar 包
 * 系统全局配置维护, 能实时刷新内存中最新配置
 * 通用的权限管理系统 - 通过角色维护用户和权限之间的关系
   * 正常的部门、用户、角色、权限点、权限模块维护
@@ -58,7 +58,7 @@
 ## 其他[必看]
 * 强烈建议使用Intellij IDEA作为开发工具，eclipse需要手动做些设置才能正常使用, 项目启动要加载Resources包括：resources和resource.dev(或prod,区分环境选择）
 * 项目中log基本都使用@Slf4j提供，需要开发工具支持Lombok插件，相关注解包括：@Getter，@Setter，@ToString，@AllArgsConstuctor, @NoArgsConstructor,@Builder
-* 前台页面是从别的网站扒下来的，几乎没任何价值，建议直接访问 /admin/page.do 进入后台, 用户的密码只是普通做了md5加密，登录细节参考LoginServlet.java里实现
+* 前台页面是从别的网站扒下来的，没任何价值，建议直接访问 /admin/page.do 进入后台, 用户的密码只是普通做了md5加密，登录细节参考LoginServlet.java里实现
 * sql重新给了一下,直接导出本地的数据库表及数据, 可使用kanwangzjm@gmail.com/123456登录
 * 个别功能只适合单机，比如动态修改quartz调度、qps控制等
 * 如有问题，可加微信沟通，个人微信号：kanwangzjm，添加时请注明来自github
