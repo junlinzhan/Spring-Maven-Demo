@@ -1,5 +1,14 @@
 # Funiture
 
+## 项目需要
+* JDK 1.7及以上
+* Maven 管理jar包
+* Mysql 数据库存储
+* Tomcat 运行用服务器
+* Redis 非必须, 缓存用, 可在配置中打开
+* Rabbit 非必须, 队列用, 可在配置打开
+* Zookeeper 非必须, 可在配置中打开
+
 ## 前台 - 用户页面 + 管理界面
 * 一个主要供展示家具产品的网站, 项目名称因此而来
 * [jquery](http://jquery.com/) 框架
