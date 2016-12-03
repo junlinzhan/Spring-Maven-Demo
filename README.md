@@ -62,3 +62,8 @@
 * sql重新给了一下,直接导出本地的数据库表及数据, 可使用kanwangzjm@gmail.com/123456登录
 * 个别功能只适合单机，比如动态修改quartz调度、qps控制等
 * 如有问题，可加微信沟通，个人微信号：kanwangzjm，添加时请注明来自github
+
+## 近期计划
+* 在之前切库的基础上, 做动态切库(分库)操作
+* mybatis层的分表操作, 借助org.shardbatis包的com.google.code.shardbatis.plugin.ShardPlugin
+* 完成主备操作, 借助org.apache.curator包选择zk leader
