@@ -23,7 +23,7 @@ public class LogoutServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        log.info("{} logout", RequestHolder.getCurrentUser().getUsername());
+        // log.info("{} logout", RequestHolder.getCurrentUser().getUsername());
         LoginUtil.logout(req, resp);
         resp.sendRedirect("index.jsp");
         return;
